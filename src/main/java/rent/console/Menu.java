@@ -2,14 +2,18 @@ package rent.console;
 
 import rent.model.Car;
 import rent.model.Client;
+import rent.service.CarService;
+
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
 public class Menu {
+    CarService carService = new CarService();
     Scanner scanner = new Scanner(System.in);
     List<Car> cars = new ArrayList<>();
-    List<Client> clients = new ArrayList<Client>();
+    List<Client> clients = new ArrayList<>();
     int CAR_ID = 0;
     int CLIENT_ID = 0;
 
@@ -188,10 +192,15 @@ public class Menu {
     }
 
     public void showCars() {
-        for (Car car: cars) {
+/*        for (Car car: cars) {
             System.out.println(car);
         }
-        System.out.println("");
+        System.out.println("----------");*/
+        try {
+            carService.showCars();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 
@@ -292,5 +301,58 @@ public class Menu {
             System.out.println(client);
         }
         System.out.println("");
+    }
+
+    //                       //
+    //      RENT PART        //
+    //                       //
+
+    public void rent() {
+        System.out.println("Rent menu:");
+        System.out.println("1) Set car to client.");
+        System.out.println("2) Delete car from client.");
+        System.out.println("3) Edit client car.");
+        System.out.println("4) Previous menu.");
+        System.out.println("5) Exit.");
+
+
+        String name = scanner.nextLine();
+
+        switch (name) {
+            case "1":
+                System.out.println(cars.toString());
+                System.out.println(clients.toString());
+
+                System.out.println("Set car to client.");
+                addClient();
+                clientMenu();
+                break;
+            case "2":
+                System.out.println("Delete client:");
+                deleteClient();
+                clientMenu();
+                break;
+            case "3":
+                System.out.println("Edit client:");
+                editClient();
+                clientMenu();
+                break;
+            case "4":
+                System.out.println("Show all clients:");
+                showClients();
+                clientMenu();
+                break;
+            case "5":
+                System.out.println("Previous menu.");
+                carAndClientMenu();
+                break;
+            case "6":
+                System.out.println("Have a good day!");
+                break;
+            default:
+                System.out.println("You choose wrong option. Try again.");
+                clientMenu();
+                break;
+        }
     }
 }

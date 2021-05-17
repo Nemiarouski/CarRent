@@ -1,0 +1,1 @@
+Car{id=0, model='afafds', colour='gaagfsdg'}
