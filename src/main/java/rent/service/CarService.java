@@ -17,7 +17,7 @@ public class CarService {
         return carRepository.showById(id);
     }
 
-    public void addCar(Car car) {
+    public void addCar(Car car) throws IOException {
         carRepository.addCar(car);
     }
 

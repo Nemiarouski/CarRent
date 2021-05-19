@@ -1,1 +1,1 @@
-Car{id=0, model='afafds', colour='gaagfsdg'}
+Car{id=1, model='BMW', colour='BLUE'}Car{id=1, model='Model', colour='Colour'}Car{id=1, model='Model', colour='Colour'}

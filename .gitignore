@@ -1,0 +1,7 @@
+/target/classes/rent/model/Car.class
+/target/classes/rent/repository/CarRepository.class
+/target/classes/cars.txt
+/target/classes/rent/service/CarService.class
+/target/classes/rent/model/Client.class
+/target/classes/clients.txt
+/target/classes/rent/console/Menu.class

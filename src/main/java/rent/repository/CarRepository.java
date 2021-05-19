@@ -16,9 +16,14 @@ public class CarRepository {
     private List<Car> cars = new ArrayList<>();
     File file = new File("src/main/resources/cars.txt");
 
-    public void addCar(Car car) {
+    public void addCar(Car car) throws IOException {
         car.setId(AUTO_ID.getAndIncrement());
         cars.add(car.getId(), car);
+
+        FileWriter fileWriter = new FileWriter(file, true);
+        fileWriter.write(car.toString());
+        fileWriter.flush();
+        fileWriter.close();
     }
 
     public Car deleteCar(Car car) {
