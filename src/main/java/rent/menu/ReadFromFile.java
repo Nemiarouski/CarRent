@@ -6,12 +6,15 @@ import java.io.IOException;
 import java.util.Scanner;
 
 public class ReadFromFile {
-    public static void readFromFile(File file) throws IOException {
+
+    public static String readFromFile(File file) throws IOException {
         FileReader fileReader = new FileReader(file);
         Scanner scanner = new Scanner(fileReader);
+        String carString = "";
         while (scanner.hasNextLine()) {
-            System.out.println(scanner.nextLine());
+            carString = carString + scanner.nextLine();
         }
         fileReader.close();
+        return carString;
     }
 }

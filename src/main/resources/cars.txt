@@ -1,1 +1,1 @@
-Car{id=1, model='BMW', colour='BLUE'}Car{id=1, model='Model', colour='Colour'}Car{id=1, model='Model', colour='Colour'}
+*0 BMW White*1 Kola Coka*2 BMW White*3 Kola Coka

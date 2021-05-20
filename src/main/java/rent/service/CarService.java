@@ -11,19 +11,17 @@ public class CarService {
         carRepository.showCars();
     }
 
-    public Car showById(int id) {
-        return carRepository.showById(id);
-    }
-
     public void addCar() throws IOException {
         carRepository.addCar();
     }
 
-    public void deleteCar(Car car) {
-        carRepository.deleteCar(car);
+    public void deleteCar() throws IOException {
+        carRepository.deleteCar();
     }
 
     public void editCar(Car car) {
         carRepository.editCar(car);
     }
+
+    public void readCars() throws IOException {carRepository.readCars();}
 }

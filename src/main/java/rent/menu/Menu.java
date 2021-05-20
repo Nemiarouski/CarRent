@@ -86,7 +86,7 @@ public class Menu {
                 break;
             case "2":
                 System.out.println("Delete car:");
-                deleteCar();
+                carService.deleteCar();
                 carMenu();
                 break;
             case "3":
@@ -96,7 +96,7 @@ public class Menu {
                 break;
             case "4":
                 System.out.println("Show all cars:");
-                showCars();
+                carService.showCars();
                 carMenu();
                 break;
             case "5":
@@ -112,21 +112,8 @@ public class Menu {
                 break;
         }
     }
-
-    public void deleteCar() throws IOException {
+    public void editCar() throws IOException {
         carService.showCars();
-        System.out.println(cars.toString());
-        System.out.println("Which car do you want to delete?");
-
-        String name = scanner.nextLine();
-
-        int i = Integer.parseInt(name);
-        cars.removeIf(car -> car.getId() == i);
-        System.out.println("");
-    }
-
-    public void editCar() {
-        showCars();
         System.out.println("Which car do you want to edit?");
 
         String name = scanner.nextLine();
@@ -139,19 +126,6 @@ public class Menu {
         System.out.println("Input car colour:");
         String colour = scanner.nextLine();
         cars.get(i).setColour(colour);
-    }
-
-    public void showCars() {
-/*        for (Car car: cars) {
-            System.out.println(car);
-        }
-        System.out.println("----------");*/
-        try {
-            carService.showCars();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
     }
 
 }
