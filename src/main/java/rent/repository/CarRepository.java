@@ -1,5 +1,6 @@
 package rent.repository;
 
+import rent.menu.ConsoleReader;
 import rent.menu.ReadFromFile;
 import rent.menu.WriteToFile;
 import rent.model.Car;
@@ -7,47 +8,37 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class CarRepository {
-    Scanner scanner = new Scanner(System.in);
     private static final AtomicInteger AUTO_ID = new AtomicInteger(0);
-    List<Car> allCarsGlobal = new ArrayList<>();
     File file = new File("src/main/resources/cars.txt");
 
 
     public void addCar() throws IOException {
         Car car = new Car();
-        car.setId(AUTO_ID.getAndIncrement());
-
         System.out.println("You need to enter some information:");
 
-        System.out.println("Input car model:");
-        String model = scanner.nextLine();
-        car.setModel(model);
-
-        System.out.println("Input car colour:");
-        String colour = scanner.nextLine();
-        car.setColour(colour);
+        car.setId(AUTO_ID.getAndIncrement());
+        car.setModel(ConsoleReader.consoleReader("Input car model:"));
+        car.setColour(ConsoleReader.consoleReader("Input car colour:"));
 
         WriteToFile.writeToFileAppend(file, car);
     }
 
     public void deleteCar() throws IOException {
-        System.out.println("Which car do you want to delete?");
         showCars();
+        int i = Integer.parseInt(ConsoleReader.consoleReader("Which car do you want to delete?"));
 
-        String carId = scanner.nextLine();
+        List<Car> testCarArray = readCars();
+        testCarArray.removeIf(car -> car.getId() == i);
 
-        int i = Integer.parseInt(carId);
-        allCarsGlobal.removeIf(car -> car.getId() == i);
-        System.out.println("");
+        if(testCarArray.size() > 0) {
+            WriteToFile.writeToFile(file, testCarArray.get(0).toString());
+        } else System.out.println("You want to write empty car.");
 
-        showCars();
-
-        for (Car car : allCarsGlobal) {
-            WriteToFile.writeToFileAppend(file, car.toString());
+        for (int j = 1; j < testCarArray.size(); j++) {
+            WriteToFile.writeToFileAppend(file, testCarArray.get(j).toString());
         }
     }
 
@@ -63,18 +54,19 @@ public class CarRepository {
 
     public List<Car> readCars() throws IOException {
         String allCarsInOneString = ReadFromFile.readFromFile(file);  //Read from file
-        String[] arrayOfCars = allCarsInOneString.split("\\*"); // Create array of '0 Kia Red' and ect.
+        String[] carArray = allCarsInOneString.split("\n"); // Create array of '0 Kia Red' and etc.
 
-        for (int i = 1; i < arrayOfCars.length; i++) {
+        List<Car> testCarArray = new ArrayList<>();
+        for (int i = 0; i < carArray.length; i++) {
 
-            String[] newCar = arrayOfCars[i].split(" ");
+            String[] newCar = carArray[i].split(" ");
 
             int id = Integer.parseInt(newCar[0]);
             String model = newCar[1];
             String colour = newCar[2];
 
-            allCarsGlobal.add(new Car(id, model, colour));
+            testCarArray.add(new Car(id, model, colour));
         }
-        return allCarsGlobal;
+        return testCarArray;
     }
 }
