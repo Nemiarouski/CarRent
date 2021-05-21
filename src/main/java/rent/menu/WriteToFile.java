@@ -8,8 +8,9 @@ public class WriteToFile {
 
     public static void writeToFileAppend(File file, Object object) throws IOException {
         FileWriter fileWriter = new FileWriter(file, true);
-        fileWriter.write("\n");
+
         fileWriter.write(object.toString());
+        fileWriter.write("\n");
         fileWriter.flush();
         fileWriter.close();
     }
