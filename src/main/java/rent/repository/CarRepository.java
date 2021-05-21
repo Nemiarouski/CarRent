@@ -28,15 +28,18 @@ public class CarRepository {
 
         showCars();
 
-        int i = Integer.parseInt(ConsoleReader.consoleReader("Which car do you want to delete?"));
+        if (readCars() != null) {
+            int i = Integer.parseInt(ConsoleReader.consoleReader("Which car do you want to delete?"));
+            testCarArray.removeIf(car -> car.getId() == i);
 
-        testCarArray.removeIf(car -> car.getId() == i);
-
-        WriteToFile.writeToFile(file, "");
-
-        for (int j = 0; j < testCarArray.size(); j++) {
-            WriteToFile.writeToFileAppend(file, testCarArray.get(j).toString());
+            WriteToFile.writeToFile(file, "");
+            for (int j = 0; j < testCarArray.size(); j++) {
+                WriteToFile.writeToFileAppend(file, testCarArray.get(j).toString());
+            }
+        } else {
+            System.out.println("Create car, bro!");
         }
+
     }
 
     public void editCar(Car car) {
