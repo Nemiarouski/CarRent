@@ -1,18 +1,15 @@
 package rent.menu;
 
-import rent.model.Car;
-import rent.model.Client;
 import rent.service.CarService;
+import rent.service.ClientService;
+
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 
 public class Menu {
     CarService carService = new CarService();
+    ClientService clientService = new ClientService();
     Scanner scanner = new Scanner(System.in);
-    List<Car> cars = new ArrayList<>();
-    List<Client> clients = new ArrayList<>();
 
     public static void main(String[] args) throws IOException {
         Menu menu = new Menu();
@@ -42,9 +39,7 @@ public class Menu {
                 break;
             case "2":
                 System.out.println("Client menu:");
-                System.out.println("in process...");
-                //clientMenu();
-                mainMenu();
+                clientMenu();
                 break;
             case "3":
                 System.out.println("Rent menu:");
@@ -91,7 +86,7 @@ public class Menu {
                 break;
             case "3":
                 System.out.println("Edit car:");
-                editCar();
+                carService.editCar();
                 carMenu();
                 break;
             case "4":
@@ -112,20 +107,54 @@ public class Menu {
                 break;
         }
     }
-    public void editCar() throws IOException {
-        carService.showCars();
-        System.out.println("Which car do you want to edit?");
 
-        String name = scanner.nextLine();
-        int i = Integer.parseInt(name);
+    //                             //
+    //         CLIENT PART         //
+    //                             //
 
-        System.out.println("Input car model:");
-        String model = scanner.nextLine();
-        cars.get(i).setModel(model);
+    public void clientMenu() throws IOException {
+        System.out.println("Choose the option:");
+        System.out.println("1) Add new client");
+        System.out.println("2) Delete client");
+        System.out.println("3) Edit client");
+        System.out.println("4) Show clients");
+        System.out.println("5) Previous menu");
+        System.out.println("6) Exit");
 
-        System.out.println("Input car colour:");
-        String colour = scanner.nextLine();
-        cars.get(i).setColour(colour);
+        String menuOption = scanner.nextLine();
+
+        switch (menuOption) {
+            case "1":
+                System.out.println("Add new client.");
+                clientService.addClient();
+                clientMenu();
+                break;
+            case "2":
+                System.out.println("Delete client:");
+                clientService.deleteClient();
+                clientMenu();
+                break;
+            case "3":
+                System.out.println("Edit client:");
+                clientService.editClient();
+                clientMenu();
+                break;
+            case "4":
+                System.out.println("Show all clients:");
+                clientService.showClients();
+                clientMenu();
+                break;
+            case "5":
+                System.out.println("Previous menu.");
+                mainMenu();
+                break;
+            case "6":
+                System.out.println("Have a good day!");
+                break;
+            default:
+                System.out.println("You choose wrong option. Try again.");
+                clientMenu();
+                break;
+        }
     }
-
 }

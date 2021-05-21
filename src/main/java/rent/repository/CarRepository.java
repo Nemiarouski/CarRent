@@ -33,17 +33,31 @@ public class CarRepository {
             testCarArray.removeIf(car -> car.getId() == i);
 
             WriteToFile.writeToFile(file, "");
-            for (int j = 0; j < testCarArray.size(); j++) {
-                WriteToFile.writeToFileAppend(file, testCarArray.get(j).toString());
+            for (Car car : testCarArray) {
+                WriteToFile.writeToFileAppend(file, car.toString());
             }
         } else {
             System.out.println("Create car, bro!");
         }
-
     }
 
-    public void editCar(Car car) {
-        //Some logic
+    public void editCar() throws IOException {
+        List<Car> testCarArray = readCars();
+        showCars();
+
+        if (readCars() != null) {
+            int i = Integer.parseInt(ConsoleReader.consoleReader("Which car do you want to edit?"));
+
+            testCarArray.get(i).setModel(ConsoleReader.consoleReader("Input car model:"));
+            testCarArray.get(i).setColour(ConsoleReader.consoleReader("Input car colour:"));
+
+            WriteToFile.writeToFile(file, "");
+            for (Car car : testCarArray) {
+                WriteToFile.writeToFileAppend(file, car.toString());
+            }
+        } else {
+            System.out.println("Create car, bro!");
+        }
     }
 
     public void showCars() throws IOException {
@@ -53,7 +67,7 @@ public class CarRepository {
                 System.out.println("Car id: " + car.getId() + ", Model: " + car.getModel() + ", Colour: " + car.getColour());
             }
         } else {
-            System.out.println("You need create car before showing.");
+            System.out.println("You need to create a car before showing.");
             System.out.println();
         }
     }
@@ -72,11 +86,10 @@ public class CarRepository {
 
                 String[] newCar = carArray[i].split(" ");
 
-                int id = i;
                 String model = newCar[1];
                 String colour = newCar[2];
 
-                testCarArray.add(new Car(id, model, colour));
+                testCarArray.add(new Car(i, model, colour));
             }
             return testCarArray;
         }

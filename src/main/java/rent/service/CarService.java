@@ -1,6 +1,5 @@
 package rent.service;
 
-import rent.model.Car;
 import rent.repository.CarRepository;
 import java.io.IOException;
 
@@ -19,9 +18,7 @@ public class CarService {
         carRepository.deleteCar();
     }
 
-    public void editCar(Car car) {
-        carRepository.editCar(car);
+    public void editCar() throws IOException {
+        carRepository.editCar();
     }
-
-    public void readCars() throws IOException {carRepository.readCars();}
 }

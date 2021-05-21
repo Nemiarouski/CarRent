@@ -1,1 +1,3 @@
-Client{id=0, fullName='Nikolay Baskov'}
+0 Vasia Kolia Impala
+0 Nokolas -
+0 213213213 1321321

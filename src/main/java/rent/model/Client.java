@@ -2,14 +2,14 @@ package rent.model;
 
 public class Client {
     private int id;
-    private String fullName;
-    private Car car;
+    private String name;
+    private String car;
 
     public Client() {
     }
-    public Client(int id, String fullName, Car car) {
+    public Client(int id, String name, String car) {
         this.id = id;
-        this.fullName = fullName;
+        this.name = name;
         this.car = car;
     }
 
@@ -21,28 +21,24 @@ public class Client {
         this.id = id;
     }
 
-    public String getFullName() {
-        return fullName;
+    public String getName() {
+        return name;
     }
 
-    public void setFullName(String fullName) {
-        this.fullName = fullName;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public Car getCar() {
+    public String getCar() {
         return car;
     }
 
-    public void setCar(Car car) {
+    public void setCar(String car) {
         this.car = car;
     }
 
     @Override
     public String toString() {
-        return "Client{" +
-                "id=" + id +
-                ", fullName='" + fullName + '\'' +
-                ", car=" + car +
-                '}';
+        return id + " " + name + " " + car;
     }
 }
