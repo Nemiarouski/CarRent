@@ -8,7 +8,7 @@ import java.util.Scanner;
 
 public class ReadFromFile {
 
-    public static String readFromFile(File file) throws IOException {
+    public static String read(File file) throws IOException {
         FileReader fileReader = new FileReader(file);
         Scanner scanner = new Scanner(fileReader);
         String carString = "";

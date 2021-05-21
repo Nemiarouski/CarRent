@@ -14,27 +14,27 @@ public class CarRepository {
 
     public void addCar() throws IOException {
         Car car = new Car();
-        System.out.println("You need to enter information about car:");
+        System.out.println("Enter car data:");
 
         car.setId(0);
-        car.setModel(ConsoleReader.consoleReader("Input car model:"));
-        car.setColour(ConsoleReader.consoleReader("Input car colour:"));
+        car.setModel(ConsoleReader.read("Input car model:"));
+        car.setColour(ConsoleReader.read("Input car colour:"));
 
-        WriteToFile.writeToFileAppend(file, car);
+        WriteToFile.writeAppend(file, car);
     }
 
     public void deleteCar() throws IOException {
-        List<Car> testCarArray = readCars();
+        List<Car> cars = readCars();
 
         showCars();
 
-        if (readCars() != null) {
-            int i = Integer.parseInt(ConsoleReader.consoleReader("Which car do you want to delete?"));
-            testCarArray.removeIf(car -> car.getId() == i);
+        if (cars != null) {
+            int i = Integer.parseInt(ConsoleReader.read("Which car need to delete?"));
+            cars.removeIf(car -> car.getId() == i);
 
-            WriteToFile.writeToFile(file, "");
-            for (Car car : testCarArray) {
-                WriteToFile.writeToFileAppend(file, car.toString());
+            WriteToFile.write(file, "");
+            for (Car car : cars) {
+                WriteToFile.writeAppend(file, car.toString());
             }
         } else {
             System.out.println("Create car, bro!");
@@ -42,28 +42,32 @@ public class CarRepository {
     }
 
     public void editCar() throws IOException {
-        List<Car> testCarArray = readCars();
+        List<Car> cars = readCars();
         showCars();
 
-        if (readCars() != null) {
-            int i = Integer.parseInt(ConsoleReader.consoleReader("Which car do you want to edit?"));
+        if (cars != null) {
+            int i = Integer.parseInt(ConsoleReader.read("Which car need to edit?"));
 
-            testCarArray.get(i).setModel(ConsoleReader.consoleReader("Input car model:"));
-            testCarArray.get(i).setColour(ConsoleReader.consoleReader("Input car colour:"));
+            editCars(cars.get(i));
 
-            WriteToFile.writeToFile(file, "");
-            for (Car car : testCarArray) {
-                WriteToFile.writeToFileAppend(file, car.toString());
+            WriteToFile.write(file, "");
+            for (Car car : cars) {
+                WriteToFile.writeAppend(file, car.toString());
             }
         } else {
             System.out.println("Create car, bro!");
         }
     }
 
-    public void showCars() throws IOException {
+    public void editCars(Car car) {
+        car.setModel(ConsoleReader.read("Input car model:"));
+        car.setColour(ConsoleReader.read("Input car colour:"));
+    }
 
-        if (readCars() != null) {
-            for (Car car : readCars()) {
+    public void showCars() throws IOException {
+        List<Car> cars = readCars();
+        if (cars != null) {
+            for (Car car : cars) {
                 System.out.println("Car id: " + car.getId() + ", Model: " + car.getModel() + ", Colour: " + car.getColour());
             }
         } else {
@@ -73,12 +77,13 @@ public class CarRepository {
     }
 
     public List<Car> readCars() throws IOException {
-        List<Car> testCarArray = new ArrayList<>();
+        List<Car> cars = new ArrayList<>();
 
-        String allCarsInOneString = ReadFromFile.readFromFile(file);  //Read from file
+        String allCarsInOneString = ReadFromFile.read(file);  //Read from file
 
         if (allCarsInOneString.equals("")) {
             System.out.println("Car list is empty");
+            return null;
         } else {
             String[] carArray = allCarsInOneString.split("\n"); // Create array of '0 Kia Red' and etc.
 
@@ -89,10 +94,9 @@ public class CarRepository {
                 String model = newCar[1];
                 String colour = newCar[2];
 
-                testCarArray.add(new Car(i, model, colour));
+                cars.add(new Car(i, model, colour));
             }
-            return testCarArray;
+            return cars;
         }
-        return null;
     }
 }

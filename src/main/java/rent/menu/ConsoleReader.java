@@ -4,16 +4,16 @@ import java.util.Scanner;
 
 public class ConsoleReader {
 
-    public static String consoleReader(String textString) {
+    public static String read(String text) {
         Scanner scanner = new Scanner(System.in);
-        System.out.println(textString);
-        String dataString = scanner.nextLine();
-        return dataString;
+        System.out.println(text);
+        String data = scanner.nextLine();
+        return data;
     }
 
-    public static String consoleReader() {
+    public static String read() {
         Scanner scanner = new Scanner(System.in);
-        String dataString = scanner.nextLine();
-        return dataString;
+        String data = scanner.nextLine();
+        return data;
     }
 }

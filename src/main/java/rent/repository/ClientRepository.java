@@ -17,10 +17,10 @@ public class ClientRepository {
         System.out.println("You need to enter information about client:");
 
         client.setId(0);
-        client.setName(ConsoleReader.consoleReader("Input client client name:"));
-        client.setCar(ConsoleReader.consoleReader("Input car model:"));
+        client.setName(ConsoleReader.read("Input client client name:"));
+        client.setCar(ConsoleReader.read("Input car model:"));
 
-        WriteToFile.writeToFileAppend(file, client);
+        WriteToFile.writeAppend(file, client);
     }
 
     public void deleteClient() throws IOException {
@@ -29,12 +29,12 @@ public class ClientRepository {
         showClients();
 
         if (readClients() != null) {
-            int i = Integer.parseInt(ConsoleReader.consoleReader("Which client do you want to delete?"));
+            int i = Integer.parseInt(ConsoleReader.read("Which client do you want to delete?"));
             testClientArray.removeIf(client -> client.getId() == i);
 
-            WriteToFile.writeToFile(file, "");
+            WriteToFile.write(file, "");
             for (Client client : testClientArray) {
-                WriteToFile.writeToFileAppend(file, client.toString());
+                WriteToFile.writeAppend(file, client.toString());
             }
         } else {
             System.out.println("Create client, bro!");
@@ -46,15 +46,15 @@ public class ClientRepository {
         showClients();
 
         if (readClients() != null) {
-            int i = Integer.parseInt(ConsoleReader.consoleReader("Which client do you want to edit?"));
+            int i = Integer.parseInt(ConsoleReader.read("Which client do you want to edit?"));
 
 
-            testClientArray.get(i).setName(ConsoleReader.consoleReader("Input client name:"));
-            testClientArray.get(i).setCar(ConsoleReader.consoleReader("Input car model:"));
+            testClientArray.get(i).setName(ConsoleReader.read("Input client name:"));
+            testClientArray.get(i).setCar(ConsoleReader.read("Input car model:"));
 
-            WriteToFile.writeToFile(file, "");
+            WriteToFile.write(file, "");
             for (Client client : testClientArray) {
-                WriteToFile.writeToFileAppend(file, client.toString());
+                WriteToFile.writeAppend(file, client.toString());
             }
         } else {
             System.out.println("Create client, bro!");
@@ -76,7 +76,7 @@ public class ClientRepository {
     public List<Client> readClients() throws IOException {
         List<Client> testClientArray = new ArrayList<>();
 
-        String allClientsInOneString = ReadFromFile.readFromFile(file);  //Read from file
+        String allClientsInOneString = ReadFromFile.read(file);  //Read from file
 
         if (allClientsInOneString.equals("")) {
             System.out.println("Client list is empty");

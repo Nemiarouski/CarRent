@@ -6,7 +6,7 @@ import java.io.IOException;
 
 public class WriteToFile {
 
-    public static void writeToFileAppend(File file, Object object) throws IOException {
+    public static void writeAppend(File file, Object object) throws IOException {
         FileWriter fileWriter = new FileWriter(file, true);
         fileWriter.write(object.toString());
         fileWriter.write("\n");
@@ -14,7 +14,7 @@ public class WriteToFile {
         fileWriter.close();
     }
 
-    public static void writeToFile(File file, Object object) throws IOException {
+    public static void write(File file, Object object) throws IOException {
         FileWriter fileWriter = new FileWriter(file);
         fileWriter.write(object.toString());
         fileWriter.flush();
