@@ -4,25 +4,28 @@ import rent.model.Car;
 import rent.model.Client;
 
 import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class SerializationMain {
     public static void main(String[] args) throws IOException, ClassNotFoundException {
 
-        Car car = new Car(0, "Impala", "Black");
-        Car car1 = new Car(1, "BMW", "Blue");
+        List<Client> clients = new ArrayList<>();
 
-        Client client = new Client(0, "Roberto Cavalli", car.getId() + " " + car.getModel() + " " + car.getColour());
-        Client client1 = new Client(1, "Margaret Mitchell", car1.getId() + " " + car1.getModel() + " " + car1.getColour());
+        clients.add(new Client(0, "Roberto Cavalli", "Impala Black"));
+        clients.add(new Client(1, "George IV", "Horse White"));
 
-        Serialization.write(client);
-        Serialization.write(client1);
+        Serialization.write(clients);
 
-        System.out.println("Some magic");
+        List<Client> desClients;
 
-        Client client2 = (Client) Serialization.read();
-        System.out.println("Test client: " + client2.getId() + " Client name: " + client2.getName() + " Client car: " + client2.getCar());
 
-        Client client3 = (Client) Serialization.read();
-        System.out.println("Test client: " + client3.getId() + " Client name: " + client3.getName() + " Client car: " + client3.getCar());
+        desClients = Serialization.read();
+
+        for (Client client : desClients) {
+            System.out.println("Client id: " + client.getId() + ", Client name: " + client.getName() +
+                    ", Client car: " + client.getCar());
+        }
+
     }
 }
