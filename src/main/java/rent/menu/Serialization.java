@@ -11,7 +11,6 @@ public class Serialization {
                 ObjectOutputStream oos = new ObjectOutputStream(fileOutputStream))
         {
             oos.writeObject(clients);
-            System.out.println("List has been written");
         }
     }
     public static List<Client> read() throws IOException, ClassNotFoundException {
