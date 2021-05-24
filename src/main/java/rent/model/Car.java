@@ -1,6 +1,9 @@
 package rent.model;
 
-public class Car {
+import java.io.Serializable;
+
+public class Car implements Serializable {
+    private static final long serialVersionUID = 1L;
     private int id = 0;
     private String model;
     private String colour;
