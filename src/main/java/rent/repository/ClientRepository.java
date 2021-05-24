@@ -2,6 +2,7 @@ package rent.repository;
 
 import rent.menu.ConsoleReader;
 import rent.menu.ReadFromFile;
+import rent.menu.Serialization;
 import rent.menu.WriteToFile;
 import rent.model.Client;
 import java.io.File;
@@ -11,6 +12,49 @@ import java.util.List;
 
 public class ClientRepository {
     File file = new File("src/main/resources/clients.txt");
+    List<Client> clients = new ArrayList<>();
+
+    public void sendToFile(List<Client> list) throws IOException {
+        Serialization.write(list);
+    }
+
+    public void readFromFile() throws IOException, ClassNotFoundException {
+        clients = Serialization.read();
+    }
+
+    public void newClient() throws IOException, ClassNotFoundException {
+        readFromFile();
+        System.out.println("You need to enter information about client:");
+        clients.add(new Client(clients.size(), ConsoleReader.read("Input client client name:"), ConsoleReader.read("Input car model:")));
+        sendToFile(clients);
+    }
+
+    public void showAllClients() throws IOException, ClassNotFoundException {
+        readFromFile();
+
+        for (Client client : clients) {
+            System.out.println("Client id: " + client.getId() + ", Client name: " + client.getName() + ", Car: " + client.getCar());
+        }
+
+    }
+
+    public void deleteOneClient() throws IOException, ClassNotFoundException {
+        showAllClients();
+
+        String choice = ConsoleReader.read("Which client need to delete?");
+
+        clients.removeIf(client -> client.getId() == Integer.parseInt(choice));
+        Serialization.write(clients);
+    }
+
+    public void editOneClient() throws IOException, ClassNotFoundException {
+        showAllClients();
+
+        String choice = ConsoleReader.read("Which client need to edit?");
+        clients.stream().filter(client -> client.getId() == Integer.parseInt(choice)).findFirst().orElse(null).setName(ConsoleReader.read("Input client client name:"));
+        clients.stream().filter(client -> client.getId() == Integer.parseInt(choice)).findFirst().orElse(null).setCar(ConsoleReader.read("Input car model:"));
+        Serialization.write(clients);
+    }
 
     public void addClient() throws IOException {
         Client client = new Client();

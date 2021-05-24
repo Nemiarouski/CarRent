@@ -4,6 +4,9 @@ import rent.service.CarService;
 import rent.service.ClientService;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Scanner;
 
 public class Menu {
@@ -11,7 +14,7 @@ public class Menu {
     ClientService clientService = new ClientService();
     Scanner scanner = new Scanner(System.in);
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException, ClassNotFoundException {
         Menu menu = new Menu();
         menu.mainMenu();
     }
@@ -22,7 +25,7 @@ public class Menu {
     //                                //
 
 
-    public void mainMenu() throws IOException {
+    public void mainMenu() throws IOException, ClassNotFoundException {
         System.out.println("");
         System.out.println("Choose the option:");
         System.out.println("1) Car menu");
@@ -62,7 +65,7 @@ public class Menu {
     //                          //
 
 
-    public void carMenu() throws IOException {
+    public void carMenu() throws IOException, ClassNotFoundException {
         System.out.println("Choose the option:");
         System.out.println("1) Add new car");
         System.out.println("2) Delete car");
@@ -112,14 +115,18 @@ public class Menu {
     //         CLIENT PART         //
     //                             //
 
-    public void clientMenu() throws IOException {
+    public void clientMenu() throws IOException, ClassNotFoundException {
+        List<String> menu = Arrays.asList("Add new client", "Delete client", "Edit client", "Show clients", "Previous menu", "Exit");
         System.out.println("Choose the option:");
+        for (int i = 0; i < menu.size(); i++) { System.out.println(i + 1 + ") " + menu.get(i)); }
+
+        /*System.out.println("Choose the option:");
         System.out.println("1) Add new client");
         System.out.println("2) Delete client");
         System.out.println("3) Edit client");
         System.out.println("4) Show clients");
         System.out.println("5) Previous menu");
-        System.out.println("6) Exit");
+        System.out.println("6) Exit");*/
 
         String menuOption = scanner.nextLine();
 
