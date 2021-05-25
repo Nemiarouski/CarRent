@@ -1,8 +1,6 @@
 package rent.menu;
 
-import rent.model.Car;
 import rent.model.Client;
-
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;

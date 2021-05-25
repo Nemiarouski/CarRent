@@ -13,6 +13,7 @@ public class Serialization {
             oos.writeObject(clients);
         }
     }
+
     public static List<Client> read() throws IOException, ClassNotFoundException {
         List<Client> desClients;
         try (FileInputStream fileInputStream = new FileInputStream("test.out");

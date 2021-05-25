@@ -8,15 +8,17 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class CarRepository {
       File file = new File("src/main/resources/cars.txt");
+      AtomicInteger AUTO_INC = new AtomicInteger(0);
 
     public void addCar() throws IOException {
         Car car = new Car();
         System.out.println("Enter car data:");
 
-        car.setId(0);
+        car.setId(AUTO_INC.getAndIncrement());
         car.setModel(ConsoleReader.read("Input car model:"));
         car.setColour(ConsoleReader.read("Input car colour:"));
 
