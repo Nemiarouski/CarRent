@@ -33,15 +33,15 @@ public class RentService {
             showCars();
             String which = Console.read("Which car he want to rent?");
 
-/*            if () {
+            if (cars.get(Integer.parseInt(which)).isRent()) {
+                System.out.println("This car is busy.");
+            } else {
+                cars.stream().filter(car -> car.getId() == Integer.parseInt(which)).findFirst().orElse(null).setRent(true);
+                carService.carRepository.writeToFile(cars);
 
-            }*/
-
-            cars.stream().filter(car -> car.getId() == Integer.parseInt(which)).findFirst().orElse(null).setRent(true);
-            carService.carRepository.writeToFile(cars);
-
-            clients.get(Integer.parseInt(who)).setCar(cars.get(Integer.parseInt(which)));
-            clientService.clientRepository.writeToFile(clients);
+                clients.get(Integer.parseInt(who)).setCar(cars.get(Integer.parseInt(which)));
+                clientService.clientRepository.writeToFile(clients);
+            }
         }
     }
 
@@ -65,15 +65,10 @@ public class RentService {
         }
     }
        /*
-       * Добавление автомобиля клиенту:
-       * Какой клиент? clientNumber
-       * Какую машину? carNumber
-       * if (car[carNumber].isRent = true) {
-       *    "Car is busy."
-       * } else {
-       *    car[carNumber] - setRent(true)
-       *    client[clientNumber] - setCar(car[carNumber])
-       * }
+       * Удаление автомобиля:
        *
+       * Какой клиент? clientNumber
+       * car[client[clientNumber].getCar().getId].setRent(false)
+       * client[clientNumber].setCar(new Car());
        * */
 }
