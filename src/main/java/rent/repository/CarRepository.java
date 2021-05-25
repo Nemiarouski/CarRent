@@ -10,22 +10,8 @@ import java.util.List;
 
 public class CarRepository {
 
-    public void writeToFile(List<Car> list) throws IOException {
-        Serialization.writeCars(list);
-    }
-
-    public List<Car> readFromFile() throws IOException, ClassNotFoundException {
-        return Serialization.readCars();
-    }
-
     public void addCar() throws IOException, ClassNotFoundException {
-        List<Car> cars = new ArrayList<>();
-
-        try {
-            cars = readFromFile();
-        } catch (EOFException e) {
-            System.out.println("Congratulations! This is first car!");
-        }
+        List<Car> cars = carInit("Congratulations! This is first car!");
 
         System.out.println("Enter information about car:");
         cars.add(new Car(cars.size(), Console.read("Input model:"), Console.read("Input colour:")));
@@ -33,13 +19,7 @@ public class CarRepository {
     }
 
     public void deleteCar() throws IOException, ClassNotFoundException {
-        List<Car> cars = new ArrayList<>();
-
-        try {
-            cars = readFromFile();
-        } catch (EOFException e) {
-            System.out.println("Sorry! Car list is empty.");
-        }
+        List<Car> cars = carInit("Sorry! Car list is empty.");
 
         if (cars.isEmpty()) {
             System.out.println("Nothing to delete.");
@@ -52,13 +32,7 @@ public class CarRepository {
     }
 
     public void editCar() throws IOException, ClassNotFoundException {
-        List<Car> cars = new ArrayList<>();
-
-        try {
-            cars = readFromFile();
-        } catch (EOFException e) {
-            System.out.println("Sorry! Car list is empty.");
-        }
+        List<Car> cars = carInit("Sorry! Car list is empty.");
 
         if (cars.isEmpty()) {
             System.out.println("Nothing to edit.");
@@ -72,13 +46,7 @@ public class CarRepository {
     }
 
     public void showCars() throws IOException, ClassNotFoundException {
-        List<Car> cars = new ArrayList<>();
-
-        try {
-            cars = readFromFile();
-        } catch (EOFException e) {
-            System.out.println("Sorry! Car list is empty.");
-        }
+        List<Car> cars = carInit("Sorry! Car list is empty.");
 
         if (cars.isEmpty()) {
             System.out.println("You need to add new car.");
@@ -87,5 +55,24 @@ public class CarRepository {
                 System.out.println("Car id: " + car.getId() + ", Car model: " + car.getModel() + ", Car colour: " + car.getColour());
             }
         }
+    }
+
+    public void writeToFile(List<Car> list) throws IOException {
+        Serialization.writeCars(list);
+    }
+
+    public List<Car> readFromFile() throws IOException, ClassNotFoundException {
+        return Serialization.readCars();
+    }
+
+    public List<Car> carInit(String text) throws IOException, ClassNotFoundException {
+        List<Car> cars = new ArrayList<>();
+
+        try {
+            cars = readFromFile();
+        } catch (EOFException e) {
+            Console.write(text);
+        }
+        return cars;
     }
 }

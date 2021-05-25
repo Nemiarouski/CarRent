@@ -10,4 +10,8 @@ public class Console {
         String data = scanner.nextLine();
         return data;
     }
+
+    public static String write(String text) {
+        return text;
+    }
 }
