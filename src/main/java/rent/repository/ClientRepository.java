@@ -1,6 +1,6 @@
 package rent.repository;
 
-import rent.menu.ConsoleReader;
+import rent.menu.Console;
 import rent.menu.Serialization;
 import rent.model.Client;
 import java.io.EOFException;
@@ -20,13 +20,15 @@ public class ClientRepository {
 
     public void addClient() throws IOException, ClassNotFoundException {
         List<Client> clients = new ArrayList<>();
+
         try {
             clients = readFromFile();
         } catch (EOFException e) {
             System.out.println("Congratulations! This is first client!");
         }
+
         System.out.println("Enter information about client:");
-        clients.add(new Client(clients.size(), ConsoleReader.read("Input client client name:"), ConsoleReader.read("Input car model:")));
+        clients.add(new Client(clients.size(), Console.read("Input client client name:"), Console.read("Input car model:")));
         writeToFile(clients);
     }
 
@@ -61,9 +63,9 @@ public class ClientRepository {
             System.out.println("Nobody to delete.");
         } else {
             showClients();
-            String choice = ConsoleReader.read("Which client need to delete?");
+            String choice = Console.read("Which client need to delete?");
             clients.removeIf(client -> client.getId() == Integer.parseInt(choice));
-            Serialization.write(clients);
+            writeToFile(clients);
         }
     }
 
@@ -80,10 +82,10 @@ public class ClientRepository {
             System.out.println("Nobody to edit.");
         } else {
             showClients();
-            String choice = ConsoleReader.read("Which client need to edit?");
-            clients.stream().filter(client -> client.getId() == Integer.parseInt(choice)).findFirst().orElse(null).setName(ConsoleReader.read("Input client client name:"));
-            clients.stream().filter(client -> client.getId() == Integer.parseInt(choice)).findFirst().orElse(null).setCar(ConsoleReader.read("Input car model:"));
-            Serialization.write(clients);
+            String choice = Console.read("Which client need to edit?");
+            clients.stream().filter(client -> client.getId() == Integer.parseInt(choice)).findFirst().orElse(null).setName(Console.read("Input client client name:"));
+            clients.stream().filter(client -> client.getId() == Integer.parseInt(choice)).findFirst().orElse(null).setCar(Console.read("Input car model:"));
+            writeToFile(clients);
         }
     }
 }

@@ -1,104 +1,91 @@
 package rent.repository;
 
-import rent.menu.ConsoleReader;
-import rent.menu.ReadFromFile;
-import rent.menu.WriteToFile;
+import rent.menu.Console;
+import rent.menu.Serialization;
 import rent.model.Car;
-import java.io.File;
+import java.io.EOFException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicInteger;
 
 public class CarRepository {
-      File file = new File("src/main/resources/cars.txt");
-      AtomicInteger AUTO_INC = new AtomicInteger(0);
 
-    public void addCar() throws IOException {
-        Car car = new Car();
-        System.out.println("Enter car data:");
-
-        car.setId(AUTO_INC.getAndIncrement());
-        car.setModel(ConsoleReader.read("Input car model:"));
-        car.setColour(ConsoleReader.read("Input car colour:"));
-
-        WriteToFile.writeAppend(file, car);
+    public void writeToFile(List<Car> list) throws IOException {
+        Serialization.writeCars(list);
     }
 
-    public void deleteCar() throws IOException {
-        List<Car> cars = readCars();
-
-        showCars();
-
-        if (cars != null) {
-            int i = Integer.parseInt(ConsoleReader.read("Which car need to delete?"));
-            cars.removeIf(car -> car.getId() == i);
-
-            WriteToFile.write(file, "");
-            for (Car car : cars) {
-                WriteToFile.writeAppend(file, car.toString());
-            }
-        } else {
-            System.out.println("Create car, bro!");
-        }
+    public List<Car> readFromFile() throws IOException, ClassNotFoundException {
+        return Serialization.readCars();
     }
 
-    public void editCar() throws IOException {
-        List<Car> cars = readCars();
-        showCars();
-
-        if (cars != null) {
-            int i = Integer.parseInt(ConsoleReader.read("Which car need to edit?"));
-
-            editCars(cars.get(i));
-
-            WriteToFile.write(file, "");
-            for (Car car : cars) {
-                WriteToFile.writeAppend(file, car.toString());
-            }
-        } else {
-            System.out.println("Create car, bro!");
-        }
-    }
-
-    public void editCars(Car car) {
-        car.setModel(ConsoleReader.read("Input car model:"));
-        car.setColour(ConsoleReader.read("Input car colour:"));
-    }
-
-    public void showCars() throws IOException {
-        List<Car> cars = readCars();
-        if (cars != null) {
-            for (Car car : cars) {
-                System.out.println("Car id: " + car.getId() + ", Model: " + car.getModel() + ", Colour: " + car.getColour());
-            }
-        } else {
-            System.out.println("You need to create a car before showing.");
-            System.out.println();
-        }
-    }
-
-    public List<Car> readCars() throws IOException {
+    public void addCar() throws IOException, ClassNotFoundException {
         List<Car> cars = new ArrayList<>();
 
-        String allCarsInOneString = ReadFromFile.read(file);  //Read from file
+        try {
+            cars = readFromFile();
+        } catch (EOFException e) {
+            System.out.println("Congratulations! This is first car!");
+        }
 
-        if (allCarsInOneString.equals("")) {
-            System.out.println("Car list is empty");
-            return null;
+        System.out.println("Enter information about car:");
+        cars.add(new Car(cars.size(), Console.read("Input model:"), Console.read("Input colour:")));
+        writeToFile(cars);
+    }
+
+    public void deleteCar() throws IOException, ClassNotFoundException {
+        List<Car> cars = new ArrayList<>();
+
+        try {
+            cars = readFromFile();
+        } catch (EOFException e) {
+            System.out.println("Sorry! Car list is empty.");
+        }
+
+        if (cars.isEmpty()) {
+            System.out.println("Nothing to delete.");
         } else {
-            String[] carArray = allCarsInOneString.split("\n"); // Create array of '0 Kia Red' and etc.
+            showCars();
+            String choice = Console.read("Which car need to delete?");
+            cars.removeIf(car -> car.getId() == Integer.parseInt(choice));
+            writeToFile(cars);
+        }
+    }
 
-            for (int i = 0; i < carArray.length; i++) {
+    public void editCar() throws IOException, ClassNotFoundException {
+        List<Car> cars = new ArrayList<>();
 
-                String[] newCar = carArray[i].split(" ");
+        try {
+            cars = readFromFile();
+        } catch (EOFException e) {
+            System.out.println("Sorry! Car list is empty.");
+        }
 
-                String model = newCar[1];
-                String colour = newCar[2];
+        if (cars.isEmpty()) {
+            System.out.println("Nothing to edit.");
+        } else {
+            showCars();
+            String choice = Console.read("Which car need to edit?");
+            cars.stream().filter(car -> car.getId() == Integer.parseInt(choice)).findFirst().orElse(null).setModel(Console.read("Input new model:"));
+            cars.stream().filter(car -> car.getId() == Integer.parseInt(choice)).findFirst().orElse(null).setColour(Console.read("Input new colour:"));
+            writeToFile(cars);
+        }
+    }
 
-                cars.add(new Car(i, model, colour));
+    public void showCars() throws IOException, ClassNotFoundException {
+        List<Car> cars = new ArrayList<>();
+
+        try {
+            cars = readFromFile();
+        } catch (EOFException e) {
+            System.out.println("Sorry! Car list is empty.");
+        }
+
+        if (cars.isEmpty()) {
+            System.out.println("You need to add new car.");
+        } else {
+            for (Car car : cars) {
+                System.out.println("Car id: " + car.getId() + ", Car model: " + car.getModel() + ", Car colour: " + car.getColour());
             }
-            return cars;
         }
     }
 }
