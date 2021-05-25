@@ -52,8 +52,13 @@ public class ClientRepository {
             System.out.println("You need to add new client.");
         } else {
             for (Client client : clients) {
-                System.out.println("[Id: " + client.getId() + " | Name: " + client.getName() + "] : [Id: "
-                        + client.getCar().getId() + " | Model: " +client.getCar().getModel() + " | Colour: " + client.getCar().getColour() + "]");
+                if (client.getCar().getModel() == null) {
+                    System.out.println("[Id: " + client.getId() + " | Name: " + client.getName() + "] : [NONE]");
+                } else {
+                    System.out.println("[Id: " + client.getId() + " | Name: " + client.getName() + "] : [Id: "
+                            + client.getCar().getId() + " | Model: " + client.getCar().getModel() + " | Colour: " + client.getCar().getColour() + "]");
+                }
+
             }
         }
     }

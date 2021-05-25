@@ -14,7 +14,7 @@ public class CarRepository {
         List<Car> cars = carInit("Congratulations! This is first car!");
 
         System.out.println("Enter information about car:");
-        cars.add(new Car(cars.size(), Console.read("Input model:"), Console.read("Input colour:")));
+        cars.add(new Car(cars.size(), Console.read("Input model:"), Console.read("Input colour:"), false));
         writeToFile(cars);
     }
 
@@ -52,7 +52,7 @@ public class CarRepository {
             System.out.println("You need to add new car.");
         } else {
             for (Car car : cars) {
-                System.out.println("[Id: " + car.getId() + " | Model: " + car.getModel() + " | Colour: " + car.getColour() + "]");
+                System.out.println("[Id: " + car.getId() + " | Model: " + car.getModel() + " | Colour: " + car.getColour() + " | Rent: " + car.isRent() + "]");
             }
         }
     }

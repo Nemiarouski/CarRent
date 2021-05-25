@@ -7,13 +7,15 @@ public class Car implements Serializable {
     private int id = 0;
     private String model;
     private String colour;
+    private boolean rent;
 
     public Car() {
     }
-    public Car(int id, String model, String colour) {
+    public Car(int id, String model, String colour, boolean rent) {
         this.id = id;
         this.model = model;
         this.colour = colour;
+        this.rent = rent;
     }
 
     public int getId() {
@@ -38,6 +40,14 @@ public class Car implements Serializable {
 
     public void setColour(String colour) {
         this.colour = colour;
+    }
+
+    public boolean isRent() {
+        return rent;
+    }
+
+    public void setRent(boolean rent) {
+        this.rent = rent;
     }
 
     @Override
