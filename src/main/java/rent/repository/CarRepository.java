@@ -52,7 +52,7 @@ public class CarRepository {
             System.out.println("You need to add new car.");
         } else {
             for (Car car : cars) {
-                System.out.println("Car id: " + car.getId() + ", Car model: " + car.getModel() + ", Car colour: " + car.getColour());
+                System.out.println("[Id: " + car.getId() + " | Model: " + car.getModel() + " | Colour: " + car.getColour() + "]");
             }
         }
     }

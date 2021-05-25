@@ -2,6 +2,7 @@ package rent.repository;
 
 import rent.menu.Console;
 import rent.menu.Serialization;
+import rent.model.Car;
 import rent.model.Client;
 import java.io.EOFException;
 import java.io.IOException;
@@ -14,7 +15,7 @@ public class ClientRepository {
         List<Client> clients = clientInit("Congratulations! This is first client!");
 
         System.out.println("Enter information about client:");
-        clients.add(new Client(clients.size(), Console.read("Input client client name:"), Console.read("Input car model:")));
+        clients.add(new Client(clients.size(), Console.read("Input client client name:"), new Car()));
         writeToFile(clients);
     }
 
@@ -40,7 +41,6 @@ public class ClientRepository {
             showClients();
             String choice = Console.read("Which client need to edit?");
             clients.stream().filter(client -> client.getId() == Integer.parseInt(choice)).findFirst().orElse(null).setName(Console.read("Input client client name:"));
-            clients.stream().filter(client -> client.getId() == Integer.parseInt(choice)).findFirst().orElse(null).setCar(Console.read("Input car model:"));
             writeToFile(clients);
         }
     }
@@ -52,7 +52,8 @@ public class ClientRepository {
             System.out.println("You need to add new client.");
         } else {
             for (Client client : clients) {
-                System.out.println("Client id: " + client.getId() + ", Client name: " + client.getName() + ", Car: " + client.getCar());
+                System.out.println("[Id: " + client.getId() + " | Name: " + client.getName() + "] : [Id: "
+                        + client.getCar().getId() + " | Model: " +client.getCar().getModel() + " | Colour: " + client.getCar().getColour() + "]");
             }
         }
     }

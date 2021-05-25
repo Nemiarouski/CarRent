@@ -6,11 +6,11 @@ public class Client implements Serializable {
     private static final long serialVersionUID = 1L;
     private int id;
     private String name;
-    private String car;
+    private Car car;
 
     public Client() {
     }
-    public Client(int id, String name, String car) {
+    public Client(int id, String name, Car car) {
         this.id = id;
         this.name = name;
         this.car = car;
@@ -32,11 +32,11 @@ public class Client implements Serializable {
         this.name = name;
     }
 
-    public String getCar() {
+    public Car getCar() {
         return car;
     }
 
-    public void setCar(String car) {
+    public void setCar(Car car) {
         this.car = car;
     }
 
