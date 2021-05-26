@@ -8,8 +8,12 @@ import java.util.List;
 
 public class Serialization {
 
+    //private final static String CAR_PATH = "src/main/resources/cars.out";
+    private final static String CAR_PATH = "src/main/resources/cars5.out";
+    private final static String CLIENT_PATH = "src/main/resources/clients.out";
+
     public static void writeClients(List<Client> clients) {
-        try (FileOutputStream fileOutputStream = new FileOutputStream("src/main/resources/clients.out");
+        try (FileOutputStream fileOutputStream = new FileOutputStream(CLIENT_PATH);
                 ObjectOutputStream oos = new ObjectOutputStream(fileOutputStream))
         {
             oos.writeObject(clients);
@@ -19,7 +23,7 @@ public class Serialization {
     }
 
     public static List<Client> readClients() {
-        File file = new File("src/main/resources/clients.out");
+        File file = new File(CLIENT_PATH);
 
         if (!file.exists()) {
             try {
@@ -44,7 +48,7 @@ public class Serialization {
     }
 
     public static void writeCars(List<Car> cars) {
-        try (FileOutputStream fileOutputStream = new FileOutputStream("src/main/resources/cars.out");
+        try (FileOutputStream fileOutputStream = new FileOutputStream(CAR_PATH);
              ObjectOutputStream oos = new ObjectOutputStream(fileOutputStream))
         {
             oos.writeObject(cars);
@@ -54,7 +58,7 @@ public class Serialization {
     }
 
     public static List<Car> readCars() {
-        File file = new File("src/main/resources/cars.out");
+        File file = new File(CAR_PATH);
 
         if (!file.exists()) {
             try {
