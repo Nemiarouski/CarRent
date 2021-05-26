@@ -8,8 +8,7 @@ import java.util.List;
 
 public class Serialization {
 
-    //private final static String CAR_PATH = "src/main/resources/cars.out";
-    private final static String CAR_PATH = "src/main/resources/cars5.out";
+    private final static String CAR_PATH = "src/main/newTest/deleteThisDir/cars5.out";
     private final static String CLIENT_PATH = "src/main/resources/clients.out";
 
     public static void writeClients(List<Client> clients) {
@@ -27,6 +26,7 @@ public class Serialization {
 
         if (!file.exists()) {
             try {
+                new File(file.getParent()).mkdirs();
                 file.createNewFile();
             } catch (IOException e) {
                 e.printStackTrace();
@@ -62,6 +62,7 @@ public class Serialization {
 
         if (!file.exists()) {
             try {
+                new File(file.getParent()).mkdirs();
                 file.createNewFile();
             } catch (IOException e) {
                 e.printStackTrace();
