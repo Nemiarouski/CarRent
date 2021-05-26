@@ -26,4 +26,8 @@ public class ClientService {
     public List<Client> readClients() {
         return clientRepository.readFromFile();
     }
+
+    public void writeClients(List<Client> clients) {
+        clientRepository.writeToFile(clients);
+    }
 }

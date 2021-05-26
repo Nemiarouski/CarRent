@@ -26,4 +26,8 @@ public class CarService {
     public List<Car> readCars() {
         return carRepository.readFromFile();
     }
+
+    public void writeCars(List<Car> cars){
+        carRepository.writeToFile(cars);
+    }
 }

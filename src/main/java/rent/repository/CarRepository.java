@@ -36,8 +36,7 @@ public class CarRepository {
         } else {
             show(cars);
             String choice = Console.read("Which car need to edit?");
-            int carId = Integer.parseInt(choice);
-            Car car = cars.stream().filter(c -> c.getId() == carId).findFirst().orElse(null);
+            Car car = cars.stream().filter(c -> c.getId() == Integer.parseInt(choice)).findFirst().orElse(null);
 
             if (car != null) {
                 car.setModel(Console.read("Input new model:"));

@@ -2,7 +2,6 @@ package rent.repository;
 
 import rent.menu.Console;
 import rent.menu.Serialization;
-import rent.model.Car;
 import rent.model.Client;
 import java.util.List;
 
@@ -12,7 +11,7 @@ public class ClientRepository {
         List<Client> clients = readFromFile();
 
         System.out.println("Enter information about client:");
-        clients.add(new Client(clients.size(), Console.read("Input client client name:"), new Car()));
+        clients.add(new Client(clients.size(), Console.read("Input client client name:"), null));
         writeToFile(clients);
     }
 
@@ -37,8 +36,14 @@ public class ClientRepository {
         } else {
             show(clients);
             String choice = Console.read("Which client need to edit?");
-            clients.stream().filter(client -> client.getId() == Integer.parseInt(choice)).findFirst().orElse(null).setName(Console.read("Input client client name:"));
-            writeToFile(clients);
+            Client client = clients.stream().filter(c -> c.getId() == Integer.parseInt(choice)).findFirst().orElse(null);
+
+            if (client != null) {
+                client.setName(Console.read("Input client client name:"));
+                writeToFile(clients);
+            } else {
+                System.out.println("You choose wrong client.");
+            }
         }
     }
 
@@ -54,7 +59,7 @@ public class ClientRepository {
 
     public void show(List<Client> clients) {
         for (Client client : clients) {
-            if (client.getCar().getModel() == null) {
+            if (client.getCar() == null) {
                 System.out.println("[Id: " + client.getId() + " | Name: " + client.getName() + "] : [NONE]");
             } else {
                 System.out.println("[Id: " + client.getId() + " | Name: " + client.getName() + "] : [Id: "
