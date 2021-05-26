@@ -22,7 +22,7 @@ public class ClientRepository {
         if (clients.isEmpty()) {
             System.out.println("Nobody to delete.");
         } else {
-            showClients();
+            show(clients);
             String choice = Console.read("Which client need to delete?");
             clients.removeIf(client -> client.getId() == Integer.parseInt(choice));
             writeToFile(clients);
@@ -35,7 +35,7 @@ public class ClientRepository {
         if (clients.isEmpty()) {
             System.out.println("Nobody to edit.");
         } else {
-            showClients();
+            show(clients);
             String choice = Console.read("Which client need to edit?");
             clients.stream().filter(client -> client.getId() == Integer.parseInt(choice)).findFirst().orElse(null).setName(Console.read("Input client client name:"));
             writeToFile(clients);
@@ -48,14 +48,17 @@ public class ClientRepository {
         if (clients.isEmpty()) {
             System.out.println("You need to add new client.");
         } else {
-            for (Client client : clients) {
-                if (client.getCar().getModel() == null) {
-                    System.out.println("[Id: " + client.getId() + " | Name: " + client.getName() + "] : [NONE]");
-                } else {
-                    System.out.println("[Id: " + client.getId() + " | Name: " + client.getName() + "] : [Id: "
-                            + client.getCar().getId() + " | Model: " + client.getCar().getModel() + " | Colour: " + client.getCar().getColour() + "]");
-                }
+            show(clients);
+        }
+    }
 
+    public void show(List<Client> clients) {
+        for (Client client : clients) {
+            if (client.getCar().getModel() == null) {
+                System.out.println("[Id: " + client.getId() + " | Name: " + client.getName() + "] : [NONE]");
+            } else {
+                System.out.println("[Id: " + client.getId() + " | Name: " + client.getName() + "] : [Id: "
+                        + client.getCar().getId() + " | Model: " + client.getCar().getModel() + " | Colour: " + client.getCar().getColour() + "]");
             }
         }
     }

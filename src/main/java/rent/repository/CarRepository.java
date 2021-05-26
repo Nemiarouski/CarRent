@@ -21,7 +21,7 @@ public class CarRepository {
         if (cars.isEmpty()) {
             System.out.println("Nothing to delete.");
         } else {
-            showCars();
+            show(cars);
             String choice = Console.read("Which car need to delete?");
             cars.removeIf(car -> car.getId() == Integer.parseInt(choice));
             writeToFile(cars);
@@ -34,7 +34,7 @@ public class CarRepository {
         if (cars.isEmpty()) {
             System.out.println("Nothing to edit.");
         } else {
-            showCars();
+            show(cars);
             String choice = Console.read("Which car need to edit?");
             int carId = Integer.parseInt(choice);
             Car car = cars.stream().filter(c -> c.getId() == carId).findFirst().orElse(null);
@@ -55,9 +55,13 @@ public class CarRepository {
         if (cars.isEmpty()) {
             System.out.println("You need to add new car.");
         } else {
-            for (Car car : cars) {
-                System.out.println("[Id: " + car.getId() + " | Model: " + car.getModel() + " | Colour: " + car.getColour() + " | Rent: " + car.isRent() + "]");
-            }
+            show (cars);
+        }
+    }
+
+    public void show(List<Car> cars) {
+        for (Car car : cars) {
+            System.out.println("[Id: " + car.getId() + " | Model: " + car.getModel() + " | Colour: " + car.getColour() + " | Rent: " + car.isRent() + "]");
         }
     }
 
