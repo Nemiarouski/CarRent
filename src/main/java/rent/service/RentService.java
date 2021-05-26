@@ -3,25 +3,24 @@ package rent.service;
 import rent.menu.Console;
 import rent.model.Car;
 import rent.model.Client;
-import java.io.IOException;
 import java.util.List;
 
 public class RentService {
     ClientService clientService = new ClientService();
     CarService carService = new CarService();
 
-    public void showCars() throws IOException, ClassNotFoundException {
+    public void showCars() {
         carService.showCars();
     }
 
-    public void showClients() throws IOException, ClassNotFoundException {
+    public void showClients() {
         clientService.showClients();
     }
 
-    public void rentCar() throws IOException, ClassNotFoundException {
+    public void rentCar() {
 
-        List<Client> clients = clientService.clientRepository.clientInit(("Sorry! Client list is empty."));
-        List<Car> cars = carService.carRepository.carInit(("Sorry! Car list is empty."));
+        List<Client> clients = clientService.readClients();
+        List<Car> cars = carService.readCars();
 
         if (clients.isEmpty()) {
             System.out.println("You need to add new client.");
@@ -45,9 +44,9 @@ public class RentService {
         }
     }
 
-    public void deleteCar() throws IOException, ClassNotFoundException {
-        List<Client> clients = clientService.clientRepository.clientInit(("Sorry! Client list is empty."));
-        List<Car> cars = carService.carRepository.carInit(("Sorry! Car list is empty."));
+    public void deleteCar() {
+        List<Client> clients = clientService.readClients();
+        List<Car> cars = carService.readCars();
 
         if (clients.isEmpty()) {
             System.out.println("You need to add new client.");

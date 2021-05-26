@@ -3,8 +3,6 @@ package rent.menu;
 import rent.service.CarService;
 import rent.service.ClientService;
 import rent.service.RentService;
-
-import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
@@ -15,14 +13,14 @@ public class Menu {
     RentService rentService = new RentService();
     Scanner scanner = new Scanner(System.in);
 
-    public static void main(String[] args) throws IOException, ClassNotFoundException {
+    public static void main(String[] args) {
         Menu menu = new Menu();
         menu.mainMenu();
     }
     //                          //
     //       MAIN MENU PART     //
     //                          //
-    public void mainMenu() throws IOException, ClassNotFoundException {
+    public void mainMenu() {
         List<String> menu = Arrays.asList("Car menu", "Client menu", "Rent menu", "Exit");
         System.out.println("Choose the option:");
         for (int i = 0; i < menu.size(); i++) { System.out.println(i + 1 + ") " + menu.get(i)); }
@@ -51,7 +49,7 @@ public class Menu {
     //                          //
     //         CAR PART         //
     //                          //
-    public void carMenu() throws IOException, ClassNotFoundException {
+    public void carMenu() {
         List<String> menu = Arrays.asList("Add new car", "Delete car", "Edit car", "Show cars", "Previous menu", "Exit");
         System.out.println("Choose the option:");
         for (int i = 0; i < menu.size(); i++) { System.out.println(i + 1 + ") " + menu.get(i)); }
@@ -90,7 +88,7 @@ public class Menu {
     //                          //
     //        CLIENT PART       //
     //                          //
-    public void clientMenu() throws IOException, ClassNotFoundException {
+    public void clientMenu() {
         List<String> menu = Arrays.asList("Add new client", "Delete client", "Edit client", "Show clients", "Previous menu", "Exit");
         System.out.println("Choose the option:");
         for (int i = 0; i < menu.size(); i++) { System.out.println(i + 1 + ") " + menu.get(i)); }
@@ -129,7 +127,7 @@ public class Menu {
     //                          //
     //        RENT PART         //
     //                          //
-    public void rentMenu() throws IOException, ClassNotFoundException {
+    public void rentMenu() {
         List<String> menu = Arrays.asList("Show cars", "Show clients", "Rent car", "Delete car", "Previous menu", "Exit");
         System.out.println("Choose the option:");
         for (int i = 0; i < menu.size(); i++) { System.out.println(i + 1 + ") " + menu.get(i)); }

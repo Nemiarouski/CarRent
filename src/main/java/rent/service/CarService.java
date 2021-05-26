@@ -1,24 +1,29 @@
 package rent.service;
 
+import rent.model.Car;
 import rent.repository.CarRepository;
-import java.io.IOException;
+import java.util.List;
 
 public class CarService {
     CarRepository carRepository = new CarRepository();
 
-    public void showCars() throws IOException, ClassNotFoundException {
+    public void showCars() {
         carRepository.showCars();
     }
 
-    public void addCar() throws IOException, ClassNotFoundException {
+    public void addCar() {
         carRepository.addCar();
     }
 
-    public void deleteCar() throws IOException, ClassNotFoundException {
+    public void deleteCar() {
         carRepository.deleteCar();
     }
 
-    public void editCar() throws IOException, ClassNotFoundException {
+    public void editCar() {
         carRepository.editCar();
+    }
+
+    public List<Car> readCars() {
+        return carRepository.readFromFile();
     }
 }

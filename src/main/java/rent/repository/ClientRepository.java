@@ -4,23 +4,20 @@ import rent.menu.Console;
 import rent.menu.Serialization;
 import rent.model.Car;
 import rent.model.Client;
-import java.io.EOFException;
-import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 public class ClientRepository {
 
-    public void addClient() throws IOException, ClassNotFoundException {
-        List<Client> clients = clientInit("Congratulations! This is first client!");
+    public void addClient() {
+        List<Client> clients = readFromFile();
 
         System.out.println("Enter information about client:");
         clients.add(new Client(clients.size(), Console.read("Input client client name:"), new Car()));
         writeToFile(clients);
     }
 
-    public void deleteClient() throws IOException, ClassNotFoundException {
-        List<Client> clients = clientInit("Sorry! Client list is empty.");
+    public void deleteClient() {
+        List<Client> clients = readFromFile();
 
         if (clients.isEmpty()) {
             System.out.println("Nobody to delete.");
@@ -32,8 +29,8 @@ public class ClientRepository {
         }
     }
 
-    public void editClient() throws IOException, ClassNotFoundException {
-        List<Client> clients = clientInit("Sorry! Client list is empty.");
+    public void editClient() {
+        List<Client> clients = readFromFile();
 
         if (clients.isEmpty()) {
             System.out.println("Nobody to edit.");
@@ -45,8 +42,8 @@ public class ClientRepository {
         }
     }
 
-    public void showClients() throws IOException, ClassNotFoundException {
-        List<Client> clients = clientInit("Sorry! Client list is empty.");
+    public void showClients() {
+        List<Client> clients = readFromFile();
 
         if (clients.isEmpty()) {
             System.out.println("You need to add new client.");
@@ -63,22 +60,11 @@ public class ClientRepository {
         }
     }
 
-    public void writeToFile(List<Client> list) throws IOException {
-        Serialization.write(list);
+    public void writeToFile(List<Client> list) {
+        Serialization.writeClients(list);
     }
 
-    public List<Client> readFromFile() throws IOException, ClassNotFoundException {
-        return Serialization.read();
-    }
-
-    public List<Client> clientInit(String text) throws IOException, ClassNotFoundException {
-        List<Client> clients = new ArrayList<>();
-
-        try {
-            clients = readFromFile();
-        } catch (EOFException e) {
-            Console.write(text);
-        }
-        return clients;
+    public List<Client> readFromFile() {
+        return Serialization.readClients();
     }
 }

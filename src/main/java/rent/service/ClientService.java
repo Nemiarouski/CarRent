@@ -1,24 +1,29 @@
 package rent.service;
 
+import rent.model.Client;
 import rent.repository.ClientRepository;
-import java.io.IOException;
+import java.util.List;
 
 public class ClientService {
     ClientRepository clientRepository = new ClientRepository();
 
-    public void showClients() throws IOException, ClassNotFoundException {
+    public void showClients() {
         clientRepository.showClients();
     }
 
-    public void addClient() throws IOException, ClassNotFoundException {
+    public void addClient() {
         clientRepository.addClient();
     }
 
-    public void deleteClient() throws IOException, ClassNotFoundException {
+    public void deleteClient() {
         clientRepository.deleteClient();
     }
 
-    public void editClient() throws IOException, ClassNotFoundException {
+    public void editClient() {
         clientRepository.editClient();
+    }
+
+    public List<Client> readClients() {
+        return clientRepository.readFromFile();
     }
 }

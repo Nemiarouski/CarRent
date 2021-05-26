@@ -3,23 +3,20 @@ package rent.repository;
 import rent.menu.Console;
 import rent.menu.Serialization;
 import rent.model.Car;
-import java.io.EOFException;
-import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 public class CarRepository {
 
-    public void addCar() throws IOException, ClassNotFoundException {
-        List<Car> cars = carInit("Congratulations! This is first car!");
+    public void addCar() {
+        List<Car> cars = readFromFile();
 
         System.out.println("Enter information about car:");
         cars.add(new Car(cars.size(), Console.read("Input model:"), Console.read("Input colour:"), false));
         writeToFile(cars);
     }
 
-    public void deleteCar() throws IOException, ClassNotFoundException {
-        List<Car> cars = carInit("Sorry! Car list is empty.");
+    public void deleteCar() {
+        List<Car> cars = readFromFile();
 
         if (cars.isEmpty()) {
             System.out.println("Nothing to delete.");
@@ -31,22 +28,29 @@ public class CarRepository {
         }
     }
 
-    public void editCar() throws IOException, ClassNotFoundException {
-        List<Car> cars = carInit("Sorry! Car list is empty.");
+    public void editCar() {
+        List<Car> cars = readFromFile();
 
         if (cars.isEmpty()) {
             System.out.println("Nothing to edit.");
         } else {
             showCars();
             String choice = Console.read("Which car need to edit?");
-            cars.stream().filter(car -> car.getId() == Integer.parseInt(choice)).findFirst().orElse(null).setModel(Console.read("Input new model:"));
-            cars.stream().filter(car -> car.getId() == Integer.parseInt(choice)).findFirst().orElse(null).setColour(Console.read("Input new colour:"));
-            writeToFile(cars);
+            int carId = Integer.parseInt(choice);
+            Car car = cars.stream().filter(c -> c.getId() == carId).findFirst().orElse(null);
+
+            if (car != null) {
+                car.setModel(Console.read("Input new model:"));
+                car.setColour(Console.read("Input new colour:"));
+                writeToFile(cars);
+            } else {
+                System.out.println("You choose wrong car.");
+            }
         }
     }
 
-    public void showCars() throws IOException, ClassNotFoundException {
-        List<Car> cars = carInit("Sorry! Car list is empty.");
+    public void showCars() {
+        List<Car> cars = readFromFile();
 
         if (cars.isEmpty()) {
             System.out.println("You need to add new car.");
@@ -57,22 +61,11 @@ public class CarRepository {
         }
     }
 
-    public void writeToFile(List<Car> list) throws IOException {
+    public void writeToFile(List<Car> list) {
         Serialization.writeCars(list);
     }
 
-    public List<Car> readFromFile() throws IOException, ClassNotFoundException {
+    public List<Car> readFromFile() {
         return Serialization.readCars();
-    }
-
-    public List<Car> carInit(String text) throws IOException, ClassNotFoundException {
-        List<Car> cars = new ArrayList<>();
-
-        try {
-            cars = readFromFile();
-        } catch (EOFException e) {
-            Console.write(text);
-        }
-        return cars;
     }
 }
