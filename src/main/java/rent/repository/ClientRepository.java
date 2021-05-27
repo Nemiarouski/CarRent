@@ -1,11 +1,13 @@
 package rent.repository;
 
 import rent.menu.Console;
-import rent.menu.Serialization;
 import rent.model.Client;
+import java.io.*;
+import java.util.ArrayList;
 import java.util.List;
 
 public class ClientRepository {
+    private final static String CLIENT_PATH = "src/main/resources/clients.out";
 
     public void addClient() {
         List<Client> clients = readFromFile();
@@ -68,11 +70,39 @@ public class ClientRepository {
         }
     }
 
-    public void writeToFile(List<Client> list) {
-        Serialization.writeClients(list);
+    public void writeToFile(List<Client> clients) {
+        try (FileOutputStream fileOutputStream = new FileOutputStream(CLIENT_PATH);
+             ObjectOutputStream oos = new ObjectOutputStream(fileOutputStream))
+        {
+            oos.writeObject(clients);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public List<Client> readFromFile() {
-        return Serialization.readClients();
+        File file = new File(CLIENT_PATH);
+
+        if (!file.exists()) {
+            try {
+                new File(file.getParent()).mkdirs();
+                file.createNewFile();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        if (file.length() > 0) {
+            try (FileInputStream fileInputStream = new FileInputStream(file);
+                 ObjectInputStream ois = new ObjectInputStream(fileInputStream))
+            {
+                return (List<Client>) ois.readObject();
+            } catch (IOException | ClassNotFoundException e) {
+                e.printStackTrace();
+                return new ArrayList<>();
+            }
+        } else {
+            return new ArrayList<>();
+        }
     }
 }

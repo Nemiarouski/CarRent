@@ -1,11 +1,13 @@
 package rent.repository;
 
 import rent.menu.Console;
-import rent.menu.Serialization;
 import rent.model.Car;
+import java.io.*;
+import java.util.ArrayList;
 import java.util.List;
 
 public class CarRepository {
+    private final static String CAR_PATH = "src/main/resources/cars.out";
 
     public void addCar() {
         List<Car> cars = readFromFile();
@@ -64,11 +66,39 @@ public class CarRepository {
         }
     }
 
-    public void writeToFile(List<Car> list) {
-        Serialization.writeCars(list);
+    public void writeToFile(List<Car> cars) {
+        try (FileOutputStream fileOutputStream = new FileOutputStream(CAR_PATH);
+             ObjectOutputStream oos = new ObjectOutputStream(fileOutputStream))
+        {
+            oos.writeObject(cars);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public List<Car> readFromFile() {
-        return Serialization.readCars();
+        File file = new File(CAR_PATH);
+
+        if (!file.exists()) {
+            try {
+                new File(file.getParent()).mkdirs();
+                file.createNewFile();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        if (file.length() > 0) {
+            try (FileInputStream fileInputStream = new FileInputStream(file);
+                 ObjectInputStream ois = new ObjectInputStream(fileInputStream))
+            {
+                return  (List<Car>) ois.readObject();
+            } catch (IOException | ClassNotFoundException e) {
+                e.printStackTrace();
+                return new ArrayList<>();
+            }
+        } else {
+            return new ArrayList<>();
+        }
     }
 }
