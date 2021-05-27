@@ -58,19 +58,19 @@ public class Menu {
 
         switch (menuOption) {
             case "1":
-                carService.addCar();
+                carService.creat();
                 carMenu();
                 break;
             case "2":
-                carService.deleteCar();
+                carService.delete();
                 carMenu();
                 break;
             case "3":
-                carService.editCar();
+                carService.edit();
                 carMenu();
                 break;
             case "4":
-                carService.showCars();
+                carService.show();
                 carMenu();
                 break;
             case "5":
@@ -97,19 +97,19 @@ public class Menu {
 
         switch (menuOption) {
             case "1":
-                clientService.addClient();
+                clientService.create();
                 clientMenu();
                 break;
             case "2":
-                clientService.deleteClient();
+                clientService.delete();
                 clientMenu();
                 break;
             case "3":
-                clientService.editClient();
+                clientService.update();
                 clientMenu();
                 break;
             case "4":
-                clientService.showClients();
+                clientService.show();
                 clientMenu();
                 break;
             case "5":

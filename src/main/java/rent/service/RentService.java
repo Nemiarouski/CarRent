@@ -3,14 +3,16 @@ package rent.service;
 import rent.repository.RentRepository;
 
 public class RentService {
+    CarService carService = new CarService();
+    ClientService clientService = new ClientService();
     RentRepository rentRepository = new RentRepository();
 
     public void showCars() {
-        rentRepository.showCars();
+        carService.show();
     }
 
     public void showClients() {
-        rentRepository.showClients();
+        clientService.show();
     }
 
     public void rentCar() {

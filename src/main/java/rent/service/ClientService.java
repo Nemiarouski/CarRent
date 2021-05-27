@@ -1,33 +1,27 @@
 package rent.service;
 
-import rent.model.Client;
 import rent.repository.ClientRepository;
-import java.util.List;
 
 public class ClientService {
     ClientRepository clientRepository = new ClientRepository();
 
-    public void showClients() {
-        clientRepository.showClients();
+    public void create() {
+        clientRepository.createClient();
     }
 
-    public void addClient() {
-        clientRepository.addClient();
+    /*public void read() {
+        clientRepository.readClients();
+    }*/
+
+    public void update() {
+        clientRepository.updateClient();
     }
 
-    public void deleteClient() {
+    public void delete() {
         clientRepository.deleteClient();
     }
 
-    public void editClient() {
-        clientRepository.editClient();
-    }
-
-    public List<Client> readClients() {
-        return clientRepository.readFromFile();
-    }
-
-    public void writeClients(List<Client> clients) {
-        clientRepository.writeToFile(clients);
+    public void show() {
+        clientRepository.showClients();
     }
 }
