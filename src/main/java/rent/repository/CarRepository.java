@@ -10,9 +10,11 @@ public class CarRepository {
     private final static String CAR_PATH = "src/main/resources/cars.out";
 
     public void createCar() {
+        List<Car> cars = readCars();
+
         System.out.println("Enter information about car:");
-        Car car = new Car(readCars().size(), Console.read("Input model:"), Console.read("Input colour:"), false);
-        saveCar(car);
+        cars.add(new Car(cars.size(), Console.read("Input model:"), Console.read("Input colour:"), false));
+        saveCars(cars);
     }
 
     public List<Car> readCars() {
@@ -88,12 +90,6 @@ public class CarRepository {
         for (Car car : cars) {
             System.out.println("[Id: " + car.getId() + " | Model: " + car.getModel() + " | Colour: " + car.getColour() + " | Rent: " + car.isRent() + "]");
         }
-    }
-
-    public void saveCar(Car car) {
-        List<Car> cars = readCars();
-        cars.add(car);
-        saveCars(cars);
     }
 
     public void saveCars(List<Car> cars) {

@@ -10,9 +10,11 @@ public class ClientRepository {
     private final static String CLIENT_PATH = "src/main/resources/clients.out";
 
     public void createClient() {
+        List<Client> clients = readClients();
+
         System.out.println("Enter information about client:");
-        Client client = new Client(readClients().size(), Console.read("Input client client name:"), null);
-        saveClient(client);
+        clients.add(new Client(clients.size(), Console.read("Input client client name:"), null));
+        saveClients(clients);
     }
 
     public List<Client> readClients() {
@@ -92,12 +94,6 @@ public class ClientRepository {
                         + client.getCar().getId() + " | Model: " + client.getCar().getModel() + " | Colour: " + client.getCar().getColour() + "]");
             }
         }
-    }
-
-    public void saveClient(Client client) {
-        List<Client> clients = readClients();
-        clients.add(client);
-        saveClients(clients);
     }
 
     public void saveClients(List<Client> clients) {

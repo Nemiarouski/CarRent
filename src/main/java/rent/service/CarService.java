@@ -9,10 +9,6 @@ public class CarService {
         carRepository.createCar();
     }
 
-    /*public void read() {
-        carRepository.readCars();
-    }*/
-
     public void edit() {
         carRepository.updateCar();
     }

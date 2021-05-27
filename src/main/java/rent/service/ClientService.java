@@ -9,10 +9,6 @@ public class ClientService {
         clientRepository.createClient();
     }
 
-    /*public void read() {
-        clientRepository.readClients();
-    }*/
-
     public void update() {
         clientRepository.updateClient();
     }
