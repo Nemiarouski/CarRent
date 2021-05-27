@@ -2,49 +2,24 @@ package rent.repository;
 
 import rent.menu.Console;
 import rent.model.Client;
-import java.io.*;
-import java.util.ArrayList;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.util.List;
 
-public class ClientRepository {
+public class ClientRepository extends AbstractRepository{
     private final static String CLIENT_PATH = "src/main/resources/clients.out";
 
     public void createClient() {
-        List<Client> clients = readClients();
+        List<Client> clients = read();
 
         System.out.println("Enter information about client:");
         clients.add(new Client(clients.size(), Console.read("Input client client name:"), null));
         saveClients(clients);
     }
 
-    public List<Client> readClients() {
-        File file = new File(CLIENT_PATH);
-
-        if (!file.exists()) {
-            try {
-                new File(file.getParent()).mkdirs();
-                file.createNewFile();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-
-        if (file.length() > 0) {
-            try (FileInputStream fileInputStream = new FileInputStream(file);
-                 ObjectInputStream ois = new ObjectInputStream(fileInputStream))
-            {
-                return (List<Client>) ois.readObject();
-            } catch (IOException | ClassNotFoundException e) {
-                e.printStackTrace();
-                return new ArrayList<>();
-            }
-        } else {
-            return new ArrayList<>();
-        }
-    }
-
     public void updateClient() {
-        List<Client> clients = readClients();
+        List<Client> clients = read();
 
         if (clients.isEmpty()) {
             System.out.println("Nobody to edit.");
@@ -63,7 +38,7 @@ public class ClientRepository {
     }
 
     public void deleteClient() {
-        List<Client> clients = readClients();
+        List<Client> clients = read();
 
         if (clients.isEmpty()) {
             System.out.println("Nobody to delete.");
@@ -76,7 +51,7 @@ public class ClientRepository {
     }
 
     public void showClients() {
-        List<Client> clients = readClients();
+        List<Client> clients = read();
 
         if (clients.isEmpty()) {
             System.out.println("You need to add new client.");
@@ -104,5 +79,10 @@ public class ClientRepository {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    String filePath() {
+        return "src/main/resources/clients.out";
     }
 }

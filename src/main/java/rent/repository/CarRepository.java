@@ -2,49 +2,24 @@ package rent.repository;
 
 import rent.menu.Console;
 import rent.model.Car;
-import java.io.*;
-import java.util.ArrayList;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.util.List;
 
-public class CarRepository {
+public class CarRepository extends AbstractRepository{
     private final static String CAR_PATH = "src/main/resources/cars.out";
 
     public void createCar() {
-        List<Car> cars = readCars();
+        List<Car> cars = read();
 
         System.out.println("Enter information about car:");
         cars.add(new Car(cars.size(), Console.read("Input model:"), Console.read("Input colour:"), false));
         saveCars(cars);
     }
 
-    public List<Car> readCars() {
-        File file = new File(CAR_PATH);
-
-        if (!file.exists()) {
-            try {
-                new File(file.getParent()).mkdirs();
-                file.createNewFile();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-
-        if (file.length() > 0) {
-            try (FileInputStream fileInputStream = new FileInputStream(file);
-                 ObjectInputStream ois = new ObjectInputStream(fileInputStream))
-            {
-                return  (List<Car>) ois.readObject();
-            } catch (IOException | ClassNotFoundException e) {
-                e.printStackTrace();
-                return new ArrayList<>();
-            }
-        } else {
-            return new ArrayList<>();
-        }
-    }
-
     public void updateCar() {
-        List<Car> cars = readCars();
+        List<Car> cars = read();
 
         if (cars.isEmpty()) {
             System.out.println("Nothing to edit.");
@@ -64,7 +39,7 @@ public class CarRepository {
     }
 
     public void deleteCar() {
-        List<Car> cars = readCars();
+        List<Car> cars = read();
 
         if (cars.isEmpty()) {
             System.out.println("Nothing to delete.");
@@ -77,7 +52,7 @@ public class CarRepository {
     }
 
     public void showCars() {
-        List<Car> cars = readCars();
+        List<Car> cars = read();
 
         if (cars.isEmpty()) {
             System.out.println("You need to add new car.");
@@ -100,5 +75,10 @@ public class CarRepository {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    String filePath() {
+        return "src/main/resources/cars.out";
     }
 }
