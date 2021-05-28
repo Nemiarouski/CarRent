@@ -5,7 +5,7 @@ import rent.repository.CarRepository;
 public class CarService {
     CarRepository carRepository = new CarRepository();
 
-    public void creat() {
+    public void create() {
         carRepository.create();
     }
 

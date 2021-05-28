@@ -58,7 +58,7 @@ public class Menu {
 
         switch (menuOption) {
             case "1":
-                carService.creat();
+                carService.create();
                 carMenu();
                 break;
             case "2":

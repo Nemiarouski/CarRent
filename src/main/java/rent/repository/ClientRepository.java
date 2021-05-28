@@ -7,37 +7,47 @@ import java.util.List;
 public class ClientRepository extends AbstractRepository{
 
     @Override
-    String filePath() {
+    public String filePath() {
         return "src/main/resources/clients.out";
     }
 
     @Override
-    List<Client> updateConditionTwo(String choice) {
+    public List<Client> createCondition() {
         List<Client> clients = read();
-        Client client = clients.stream().filter(c -> c.getId() == Integer.parseInt(choice)).findFirst().orElse(null);
-        client.setName(Console.read("Input client name:"));
-        clients.add(client);
+        clients.add(new Client(clients.size(), Console.read("Input client client name:"), null));
         return clients;
     }
 
     @Override
-    Client updateConditionOne(String choice) {
+    public void updateCondition(String choice) {
         List<Client> clients = read();
         Client client = clients.stream().filter(c -> c.getId() == Integer.parseInt(choice)).findFirst().orElse(null);
-        return client;
+
+        if (client != null) {
+            client.setName(Console.read("Input client name:"));
+            save(clients);
+        } else {
+            System.out.println("You choose wrong number.");
+        }
     }
 
     @Override
-    List<Client> deleteCondition(String choice) {
+    public List<Client> deleteCondition(String choice) {
         List<Client> clients = read();
         clients.removeIf(l -> l.getId() == Integer.parseInt(choice));
         return clients;
     }
 
     @Override
-    List<Client> createCondition() {
+    public void showCondition() {
         List<Client> clients = read();
-        clients.add(new Client(clients.size(), Console.read("Input client client name:"), null));
-        return clients;
+        for (Client client : clients) {
+            if (client.getCar() == null) {
+                System.out.println("[Id: " + client.getId() + " | Name: " + client.getName() + "] : [NONE]");
+            } else {
+                System.out.println("[Id: " + client.getId() + " | Name: " + client.getName() + "] : [Id: "
+                        + client.getCar().getId() + " | Model: " + client.getCar().getModel() + " | Colour: " + client.getCar().getColour() + "]");
+            }
+        }
     }
 }

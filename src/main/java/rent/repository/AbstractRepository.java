@@ -7,30 +7,13 @@ import java.util.List;
 
 public abstract class AbstractRepository {
     abstract String filePath();
-    abstract <E> List<E> deleteCondition(String choice);
     abstract <E> List<E> createCondition();
-    abstract <E> Object updateConditionOne(String choice);
-    abstract <E> List<E> updateConditionTwo(String choice);
-
-    public <E> void update() {
-        List<E> list = read();
-
-        if (list.isEmpty()) {
-            System.out.println("Nothing to edit.");
-        } else {
-            show(list);
-            String choice = Console.read("Which number to edit?");
-            if (updateConditionOne(choice) != null) {
-                save(updateConditionTwo(choice));
-            } else {
-                System.out.println("You choose wrong number.");
-            }
-        }
-    }
+    abstract void updateCondition(String choice);
+    abstract <E> List<E> deleteCondition(String choice);
+    abstract void showCondition();
 
     public <E> void create() {
-        List<E> list = read();
-        list.addAll(createCondition());
+        List<E> list = createCondition();
         save(list);
     }
 
@@ -60,6 +43,31 @@ public abstract class AbstractRepository {
         }
     }
 
+    public <E> void update() {
+        List<E> list = read();
+
+        if (!list.isEmpty()) {
+            show();
+            String choice = Console.read("Which number to edit?");
+            updateCondition(choice);
+        } else {
+            System.out.println("Nothing to edit.");
+        }
+    }
+
+    public <E> void delete() {
+        List<E> list = read();
+
+        if (!list.isEmpty()) {
+            show();
+            String choice = Console.read("Which number to delete?");
+            list = deleteCondition(choice);
+            save(list);
+        } else {
+            System.out.println("Empty list.");
+        }
+    }
+
     public <E> void save(List<E> list) {
         try (FileOutputStream fileOutputStream = new FileOutputStream(filePath());
              ObjectOutputStream oos = new ObjectOutputStream(fileOutputStream))
@@ -70,10 +78,8 @@ public abstract class AbstractRepository {
         }
     }
 
-    public <E> void show(List<E> list) {
-        for (int i = 0; i < list.size(); i++) {
-            System.out.println(list.get(i));
-        }
+    public <E> void show() {
+        showCondition();
     }
 
     public <E> void showAll() {
@@ -82,20 +88,7 @@ public abstract class AbstractRepository {
         if (list.isEmpty()) {
             System.out.println("Empty list.");
         } else {
-            show(list);
-        }
-    }
-
-    public <E> void delete() {
-        List<E> list = read();
-
-        if (list.isEmpty()) {
-            System.out.println("Empty list.");
-        } else {
-            show(list);
-            String choice = Console.read("Which number to delete?");
-            list.addAll(deleteCondition(choice));
-            save(list);
+            show();
         }
     }
 }

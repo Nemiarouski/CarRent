@@ -13,14 +13,14 @@ public class RentRepository {
         List<Client> clients = clientRepository.read();
         List<Car> cars = carRepository.read();
 
-        clientRepository.show(clients);
+        clientRepository.show();
         String who = Console.read("Which client want to rent car?");
         Client client = clients.stream().filter(c -> c.getId() == Integer.parseInt(who)).findFirst().orElse(null);
 
         if (client == null) {
             System.out.println("You choose wrong client.");
         } else {
-            carRepository.show(cars);
+            carRepository.show();
             String which = Console.read("Which car he want to rent?");
             Car car = cars.stream().filter(c -> c.getId() == Integer.parseInt(which)).findFirst().orElse(null);
 
@@ -44,7 +44,7 @@ public class RentRepository {
         List<Client> clients = clientRepository.read();
         List<Car> cars = carRepository.read();
 
-        clientRepository.show(clients);
+        clientRepository.show();
         String who = Console.read("Which client want to unset car?");
         Client client = clients.stream().filter(c -> c.getId() == Integer.parseInt(who)).findFirst().orElse(null);
 
