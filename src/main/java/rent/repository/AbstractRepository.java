@@ -78,14 +78,12 @@ public abstract class AbstractRepository {
         }
     }
 
-    public <E> void show() {
+    public void show() {
         showCondition();
     }
 
-    public <E> void showAll() {
-        List<E> list = read();
-
-        if (list.isEmpty()) {
+    public void showAll() {
+        if (read().isEmpty()) {
             System.out.println("Empty list.");
         } else {
             show();
