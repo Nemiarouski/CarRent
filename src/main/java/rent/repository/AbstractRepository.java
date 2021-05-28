@@ -1,14 +1,38 @@
 package rent.repository;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
+import rent.menu.Console;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public abstract class AbstractRepository {
     abstract String filePath();
+    abstract <E> List<E> deleteCondition(String choice);
+    abstract <E> List<E> createCondition();
+    abstract <E> Object updateConditionOne(String choice);
+    abstract <E> List<E> updateConditionTwo(String choice);
+
+    public <E> void update() {
+        List<E> list = read();
+
+        if (list.isEmpty()) {
+            System.out.println("Nothing to edit.");
+        } else {
+            show(list);
+            String choice = Console.read("Which number to edit?");
+            if (updateConditionOne(choice) != null) {
+                save(updateConditionTwo(choice));
+            } else {
+                System.out.println("You choose wrong number.");
+            }
+        }
+    }
+
+    public <E> void create() {
+        List<E> list = read();
+        list.addAll(createCondition());
+        save(list);
+    }
 
     public <E> List<E> read() {
         File file = new File(filePath());
@@ -36,5 +60,42 @@ public abstract class AbstractRepository {
         }
     }
 
+    public <E> void save(List<E> list) {
+        try (FileOutputStream fileOutputStream = new FileOutputStream(filePath());
+             ObjectOutputStream oos = new ObjectOutputStream(fileOutputStream))
+        {
+            oos.writeObject(list);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
+    public <E> void show(List<E> list) {
+        for (int i = 0; i < list.size(); i++) {
+            System.out.println(list.get(i));
+        }
+    }
+
+    public <E> void showAll() {
+        List<E> list = read();
+
+        if (list.isEmpty()) {
+            System.out.println("Empty list.");
+        } else {
+            show(list);
+        }
+    }
+
+    public <E> void delete() {
+        List<E> list = read();
+
+        if (list.isEmpty()) {
+            System.out.println("Empty list.");
+        } else {
+            show(list);
+            String choice = Console.read("Which number to delete?");
+            list.addAll(deleteCondition(choice));
+            save(list);
+        }
+    }
 }

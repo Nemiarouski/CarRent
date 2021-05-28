@@ -6,18 +6,18 @@ public class CarService {
     CarRepository carRepository = new CarRepository();
 
     public void creat() {
-        carRepository.createCar();
+        carRepository.create();
     }
 
     public void edit() {
-        carRepository.updateCar();
+        carRepository.update();
     }
 
     public void delete() {
-        carRepository.deleteCar();
+        carRepository.delete();
     }
 
     public void show() {
-        carRepository.showCars();
+        carRepository.showAll();
     }
 }

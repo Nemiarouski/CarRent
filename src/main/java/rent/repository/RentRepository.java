@@ -31,10 +31,10 @@ public class RentRepository {
                     System.out.println("This car is busy.");
                 } else {
                     car.setRent(true);
-                    carRepository.saveCars(cars);
+                    carRepository.save(cars);
 
                     client.setCar(car);
-                    clientRepository.saveClients(clients);
+                    clientRepository.save(clients);
                 }
             }
         }
@@ -56,10 +56,10 @@ public class RentRepository {
             } else {
                 Car car = cars.stream().filter(c -> c.getId() == clients.get(Integer.parseInt(who)).getCar().getId()).findFirst().orElse(null);
                 car.setRent(false);
-                carRepository.saveCars(cars);
+                carRepository.save(cars);
 
                 client.setCar(null);
-                clientRepository.saveClients(clients);
+                clientRepository.save(clients);
             }
         }
     }

@@ -6,18 +6,18 @@ public class ClientService {
     ClientRepository clientRepository = new ClientRepository();
 
     public void create() {
-        clientRepository.createClient();
+        clientRepository.create();
     }
 
     public void update() {
-        clientRepository.updateClient();
+        clientRepository.update();
     }
 
     public void delete() {
-        clientRepository.deleteClient();
+        clientRepository.delete();
     }
 
     public void show() {
-        clientRepository.showClients();
+        clientRepository.showAll();
     }
 }
