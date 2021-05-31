@@ -3,20 +3,17 @@ package rent.service;
 import rent.menu.Console;
 import rent.model.Car;
 import rent.repository.CarRepository;
-
 import java.util.List;
-import java.util.concurrent.atomic.AtomicInteger;
 
 public class CarService {
     CarRepository carRepository = new CarRepository();
-    AtomicInteger atomicInt = new AtomicInteger(0);
 
     public void create() {
         String model = Console.read("Input model:");
         String colour = Console.read("Input colour:");
 
         Car car = new Car();
-        car.setId(atomicInt.getAndIncrement());
+        car.setId(0);
         car.setModel(model);
         car.setColour(colour);
 
@@ -51,6 +48,17 @@ public class CarService {
     }
 
     public void show() {
+        replaceId();
         carRepository.show();
+    }
+
+    public void replaceId() {
+        List<Car> cars = carRepository.read();
+
+        for (int i = 0; i < cars.size(); i++) {
+            cars.get(i).setId(i);
+        }
+
+        carRepository.save(cars);
     }
 }

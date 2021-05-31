@@ -3,19 +3,16 @@ package rent.service;
 import rent.menu.Console;
 import rent.model.Client;
 import rent.repository.ClientRepository;
-
 import java.util.List;
-import java.util.concurrent.atomic.AtomicInteger;
 
 public class ClientService {
     ClientRepository clientRepository = new ClientRepository();
-    AtomicInteger atomicInt = new AtomicInteger(0);
 
     public void create() {
         String clientName = Console.read("Input client name:");
 
         Client client = new Client();
-        client.setId(atomicInt.getAndIncrement());
+        client.setId(0);
         client.setName(clientName);
 
         clientRepository.create(client);
@@ -27,7 +24,6 @@ public class ClientService {
         String choice = Console.read("Which number to edit?");
 
         List<Client> clients = clientRepository.read();
-
         Client client = clients.stream().filter(c -> c.getId() == Integer.parseInt(choice)).findFirst().orElse(null);
 
         if (client != null) {
@@ -49,6 +45,17 @@ public class ClientService {
     }
 
     public void show() {
+        replaceId();
         clientRepository.show();
+    }
+
+    public void replaceId() {
+        List<Client> clients = clientRepository.read();
+
+        for (int i = 0; i < clients.size(); i++) {
+            clients.get(i).setId(i);
+        }
+
+        clientRepository.save(clients);
     }
 }
