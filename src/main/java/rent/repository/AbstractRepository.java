@@ -1,23 +1,20 @@
 package rent.repository;
 
-import rent.menu.Console;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class AbstractRepository {
+public abstract class AbstractRepository<T> {
     abstract String filePath();
-    abstract <E> List<E> createCondition();
-    abstract void updateCondition(String choice);
-    abstract <E> List<E> deleteCondition(String choice);
     abstract void showCondition();
 
-    public <E> void create() {
-        List<E> list = createCondition();
+    public void create(T t) {
+        List<T> list = read();
+        list.add(t);
         save(list);
     }
 
-    public <E> List<E> read() {
+    public List<T> read() {
         File file = new File(filePath());
 
         if (!file.exists()) {
@@ -33,7 +30,7 @@ public abstract class AbstractRepository {
             try (FileInputStream fileInputStream = new FileInputStream(file);
                  ObjectInputStream ois = new ObjectInputStream(fileInputStream))
             {
-                return (List<E>) ois.readObject();
+                return (List<T>) ois.readObject();
             } catch (IOException | ClassNotFoundException e) {
                 e.printStackTrace();
                 return new ArrayList<>();
@@ -43,32 +40,7 @@ public abstract class AbstractRepository {
         }
     }
 
-    public <E> void update() {
-        List<E> list = read();
-
-        if (!list.isEmpty()) {
-            show();
-            String choice = Console.read("Which number to edit?");
-            updateCondition(choice);
-        } else {
-            System.out.println("Nothing to edit.");
-        }
-    }
-
-    public <E> void delete() {
-        List<E> list = read();
-
-        if (!list.isEmpty()) {
-            show();
-            String choice = Console.read("Which number to delete?");
-            list = deleteCondition(choice);
-            save(list);
-        } else {
-            System.out.println("Empty list.");
-        }
-    }
-
-    public <E> void save(List<E> list) {
+    public void save(List<T> list) {
         try (FileOutputStream fileOutputStream = new FileOutputStream(filePath());
              ObjectOutputStream oos = new ObjectOutputStream(fileOutputStream))
         {
@@ -79,14 +51,10 @@ public abstract class AbstractRepository {
     }
 
     public void show() {
-        showCondition();
-    }
-
-    public void showAll() {
         if (read().isEmpty()) {
             System.out.println("Empty list.");
         } else {
-            show();
+            showCondition();
         }
     }
 }

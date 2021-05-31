@@ -66,7 +66,7 @@ public class Menu {
                 carMenu();
                 break;
             case "3":
-                carService.edit();
+                carService.update();
                 carMenu();
                 break;
             case "4":
