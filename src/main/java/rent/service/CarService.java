@@ -17,7 +17,9 @@ public class CarService {
         car.setModel(model);
         car.setColour(colour);
 
-        carRepository.create(car);
+        List<Car> cars = carRepository.read();
+        cars.add(car);
+        carRepository.save(cars);
     }
 
     public void update() {

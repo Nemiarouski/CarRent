@@ -8,6 +8,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 public class FileManager {
@@ -28,14 +29,18 @@ public class FileManager {
         Path path = Paths.get(PATH);
         Iterable<String> iterable = Arrays.asList("Test Line 1", "Test Line 2");
 
-        try {
+/*        try {
             Files.write(path, iterable);
         } catch (IOException e) {
             e.printStackTrace();
-        }
+        }*/
 
         //Ругается на коллекцию
-        //Files.write(path, clients);
+        try {
+            Files.write(path, Collections.singleton(clients.toString()));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
     }
 

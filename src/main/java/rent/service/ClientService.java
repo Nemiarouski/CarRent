@@ -15,7 +15,9 @@ public class ClientService {
         client.setId(0);
         client.setName(clientName);
 
-        clientRepository.create(client);
+        List<Client> clients = clientRepository.read();
+        clients.add(client);
+        clientRepository.save(clients);
     }
 
     public void update() {

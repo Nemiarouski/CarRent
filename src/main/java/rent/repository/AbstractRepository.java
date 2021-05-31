@@ -8,12 +8,6 @@ public abstract class AbstractRepository<T> {
     abstract String filePath();
     abstract void showCondition();
 
-    public void create(T t) {
-        List<T> list = read();
-        list.add(t);
-        save(list);
-    }
-
     public List<T> read() {
         File file = new File(filePath());
 
