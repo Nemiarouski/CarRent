@@ -3,6 +3,7 @@ package rent.model;
 import java.io.Serializable;
 
 public class Rent implements Serializable {
+    private static final long serialVersionUID = 1L;
     private int id;
     private Car car;
     private Client client;

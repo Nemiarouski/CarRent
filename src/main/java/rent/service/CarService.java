@@ -68,4 +68,8 @@ public class CarService {
     public Car findById(int id) {
         return carRepository.findById(id);
     }
+
+    public void save(Car car) {
+        carRepository.saveOrUpdate(car);
+    }
 }

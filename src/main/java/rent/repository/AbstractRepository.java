@@ -2,6 +2,7 @@ package rent.repository;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 public abstract class AbstractRepository<T extends IdentifiableEntity> {
@@ -15,8 +16,9 @@ public abstract class AbstractRepository<T extends IdentifiableEntity> {
 
     public void saveOrUpdate(T t) {
         List<T> list = read();
-        //Проблема с t.getId();
-        list.set(t.getId(), t);
+        list.removeIf(t1 -> t1.getId() == t.getId());
+        list.add(t);
+        list.sort(Comparator.comparing(l -> l.getId()));
         save(list);
     }
 

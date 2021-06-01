@@ -65,4 +65,8 @@ public class ClientService {
     public Client findById(int id) {
         return clientRepository.findById(id);
     }
+
+    public void save(Client client) {
+        clientRepository.saveOrUpdate(client);
+    }
 }

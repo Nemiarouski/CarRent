@@ -5,12 +5,10 @@ import rent.model.Car;
 import rent.model.Client;
 import rent.repository.RentRepository;
 
-import java.util.List;
-
 public class RentService {
-    CarService carService = new CarService();
-    ClientService clientService = new ClientService();
     RentRepository rentRepository = new RentRepository();
+    ClientService clientService = new ClientService();
+    CarService carService = new CarService();
 
     public void showCars() {
         carService.show();
@@ -21,9 +19,6 @@ public class RentService {
     }
 
     public void rentCar() {
-        List<Client> clients = clientService.read();
-        List<Car> cars = carService.read();
-
         clientService.show();
         int who = Integer.parseInt(Console.read("Which client want to rent car?"));
         Client client = clientService.findById(who);
@@ -42,18 +37,33 @@ public class RentService {
                     System.out.println("This car is busy.");
                 } else {
                     car.setRent(true);
-                    //carService.update(cars);
+                    carService.save(car);
 
                     client.setCar(car);
-                    //clientRepository.save(clients);
+                    clientService.save(client);
                 }
             }
         }
-
-        rentRepository.rentCar();
     }
 
     public void deleteCar() {
-        rentRepository.deleteCar();
+        clientService.show();
+        int who = Integer.parseInt(Console.read("Which client want to unset car?"));
+        Client client = clientService.findById(who);
+
+        if (client == null) {
+            System.out.println("You choose wrong client.");
+        } else {
+            if (client.getCar() == null) {
+                System.out.println("This client doesn't have a car!");
+            } else {
+                Car car = carService.findById(client.getCar().getId());
+                car.setRent(false);
+                carService.save(car);
+
+                client.setCar(null);
+                clientService.save(client);
+            }
+        }
     }
 }
