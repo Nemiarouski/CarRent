@@ -1,8 +1,10 @@
 package rent.model;
 
+import rent.repository.IdentifiableEntity;
+
 import java.io.Serializable;
 
-public class Rent implements Serializable {
+public class Rent implements IdentifiableEntity, Serializable {
     private static final long serialVersionUID = 1L;
     private int id;
     private Car car;

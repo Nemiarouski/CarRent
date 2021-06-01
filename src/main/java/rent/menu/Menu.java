@@ -128,7 +128,7 @@ public class Menu {
     //        RENT PART         //
     //                          //
     public void rentMenu() {
-        List<String> menu = Arrays.asList("Show cars", "Show clients", "Rent car", "Delete car", "Previous menu", "Exit");
+        List<String> menu = Arrays.asList("Show cars", "Show clients", "Show rent", "Rent car", "Delete car", "Previous menu", "Exit");
         System.out.println("Choose the option:");
         for (int i = 0; i < menu.size(); i++) { System.out.println(i + 1 + ") " + menu.get(i)); }
 
@@ -144,17 +144,21 @@ public class Menu {
                 rentMenu();
                 break;
             case "3":
-                rentService.rentCar();
+                rentService.showRent();
                 rentMenu();
                 break;
             case "4":
-                rentService.deleteCar();
+                rentService.rentCar();
                 rentMenu();
                 break;
             case "5":
-                mainMenu();
+                rentService.deleteCar();
+                rentMenu();
                 break;
             case "6":
+                mainMenu();
+                break;
+            case "7":
                 System.out.println("Have a good day!");
                 break;
             default:
