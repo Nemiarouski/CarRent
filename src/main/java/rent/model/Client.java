@@ -1,8 +1,10 @@
 package rent.model;
 
+import rent.repository.IdentifiableEntity;
+
 import java.io.Serializable;
 
-public class Client implements Serializable {
+public class Client implements IdentifiableEntity, Serializable {
     private static final long serialVersionUID = 1L;
     private int id;
     private String name;

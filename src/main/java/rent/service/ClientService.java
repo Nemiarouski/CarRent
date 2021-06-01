@@ -3,35 +3,38 @@ package rent.service;
 import rent.menu.Console;
 import rent.model.Client;
 import rent.repository.ClientRepository;
+import java.util.Comparator;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 public class ClientService {
     ClientRepository clientRepository = new ClientRepository();
 
     public void create() {
         String clientName = Console.read("Input client name:");
+        List<Client> clients = clientRepository.read();
+        Client clientMaxId = clients.stream().max(Comparator.comparing(Client::getId)).orElseThrow(NoSuchElementException::new);
 
         Client client = new Client();
-        client.setId(0);
+        client.setId(clientMaxId.getId() + 1);
         client.setName(clientName);
 
-        List<Client> clients = clientRepository.read();
         clients.add(client);
         clientRepository.save(clients);
     }
 
+    public List<Client> read() {
+        return clientRepository.read();
+    }
+
     public void update() {
         show();
-
-        String choice = Console.read("Which number to edit?");
-
-        List<Client> clients = clientRepository.read();
-        Client client = clients.stream().filter(c -> c.getId() == Integer.parseInt(choice)).findFirst().orElse(null);
+        int choice = Integer.parseInt(Console.read("Which number to update?"));
+        Client client = clientRepository.findById(choice);
 
         if (client != null) {
             client.setName(Console.read("New client name:"));
-
-            clientRepository.save(clients);
+            clientRepository.saveOrUpdate(client);
         } else {
             System.out.println("You choose wrong number.");
         }
@@ -47,17 +50,19 @@ public class ClientService {
     }
 
     public void show() {
-        replaceId();
-        clientRepository.show();
-    }
-
-    public void replaceId() {
         List<Client> clients = clientRepository.read();
 
-        for (int i = 0; i < clients.size(); i++) {
-            clients.get(i).setId(i);
+        for (Client client : clients) {
+            if (client.getCar() == null) {
+                System.out.println("[Id: " + client.getId() + " | Name: " + client.getName() + "] : [NONE]");
+            } else {
+                System.out.println("[Id: " + client.getId() + " | Name: " + client.getName() + "] : [Id: "
+                        + client.getCar().getId() + " | Model: " + client.getCar().getModel() + " | Colour: " + client.getCar().getColour() + "]");
+            }
         }
+    }
 
-        clientRepository.save(clients);
+    public Client findById(int id) {
+        return clientRepository.findById(id);
     }
 }

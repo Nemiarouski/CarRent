@@ -3,7 +3,9 @@ package rent.service;
 import rent.menu.Console;
 import rent.model.Car;
 import rent.repository.CarRepository;
+import java.util.Comparator;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 public class CarService {
     CarRepository carRepository = new CarRepository();
@@ -12,29 +14,31 @@ public class CarService {
         String model = Console.read("Input model:");
         String colour = Console.read("Input colour:");
 
+        List<Car> cars = carRepository.read();
+        Car carMaxId = cars.stream().max(Comparator.comparing(Car::getId)).orElseThrow(NoSuchElementException::new);
+
         Car car = new Car();
-        car.setId(0);
+        car.setId(carMaxId.getId() + 1);
         car.setModel(model);
         car.setColour(colour);
 
-        List<Car> cars = carRepository.read();
         cars.add(car);
         carRepository.save(cars);
     }
 
+    public List<Car> read() {
+        return carRepository.read();
+    }
+
     public void update() {
         show();
-
-        String choice = Console.read("Which number to update?");
-
-        List<Car> cars = carRepository.read();
-        Car car = cars.stream().filter(c -> c.getId() == Integer.parseInt(choice)).findFirst().orElse(null);
+        int choice = Integer.parseInt(Console.read("Which number to update?"));
+        Car car = carRepository.findById(choice);
 
         if (car != null) {
             car.setModel(Console.read("New model:"));
             car.setColour(Console.read("New colour:"));
-
-            carRepository.save(cars);
+            carRepository.saveOrUpdate(car);
         } else {
             System.out.println("You choose wrong number.");
         }
@@ -50,17 +54,18 @@ public class CarService {
     }
 
     public void show() {
-        replaceId();
-        carRepository.show();
-    }
-
-    public void replaceId() {
         List<Car> cars = carRepository.read();
 
-        for (int i = 0; i < cars.size(); i++) {
-            cars.get(i).setId(i);
+        if (cars.isEmpty()) {
+            System.out.println("Empty list.");
+        } else {
+            for (Car car : cars) {
+                System.out.println("[Id: " + car.getId() + " | Model: " + car.getModel() + " | Colour: " + car.getColour() + " | Rent: " + car.isRent() + "]");
+            }
         }
+    }
 
-        carRepository.save(cars);
+    public Car findById(int id) {
+        return carRepository.findById(id);
     }
 }

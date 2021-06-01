@@ -4,9 +4,21 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class AbstractRepository<T> {
-    abstract String filePath();
-    abstract void showCondition();
+public abstract class AbstractRepository<T extends IdentifiableEntity> {
+    protected abstract String filePath();
+
+    public T findById(int id) {
+        List<T> list = read();
+        T t = list.stream().filter(l -> l.getId() == id).findFirst().orElse(null);
+        return t;
+    }
+
+    public void saveOrUpdate(T t) {
+        List<T> list = read();
+        //Проблема с t.getId();
+        list.set(t.getId(), t);
+        save(list);
+    }
 
     public List<T> read() {
         File file = new File(filePath());
@@ -41,14 +53,6 @@ public abstract class AbstractRepository<T> {
             oos.writeObject(list);
         } catch (IOException e) {
             e.printStackTrace();
-        }
-    }
-
-    public void show() {
-        if (read().isEmpty()) {
-            System.out.println("Empty list.");
-        } else {
-            showCondition();
         }
     }
 }

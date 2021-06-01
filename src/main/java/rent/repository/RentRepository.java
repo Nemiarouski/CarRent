@@ -10,7 +10,7 @@ public class RentRepository {
     CarRepository carRepository = new CarRepository();
 
     public void rentCar() {
-        List<Client> clients = clientRepository.read();
+/*        List<Client> clients = clientRepository.read();
         List<Car> cars = carRepository.read();
 
         clientRepository.show();
@@ -37,11 +37,11 @@ public class RentRepository {
                     clientRepository.save(clients);
                 }
             }
-        }
+        }*/
     }
 
     public void deleteCar() {
-        List<Client> clients = clientRepository.read();
+/*        List<Client> clients = clientRepository.read();
         List<Car> cars = carRepository.read();
 
         clientRepository.show();
@@ -61,6 +61,6 @@ public class RentRepository {
                 client.setCar(null);
                 clientRepository.save(clients);
             }
-        }
+        }*/
     }
 }
