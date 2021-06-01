@@ -27,15 +27,7 @@ public class FileManager {
         clients.add(client1);
 
         Path path = Paths.get(PATH);
-        Iterable<String> iterable = Arrays.asList("Test Line 1", "Test Line 2");
 
-/*        try {
-            Files.write(path, iterable);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }*/
-
-        //Ругается на коллекцию
         try {
             Files.write(path, Collections.singleton(clients.toString()));
         } catch (IOException e) {

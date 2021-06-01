@@ -41,11 +41,8 @@ public class RentService {
                 client.setCar(null);
                 clientService.save(client);
 
-                rents.removeIf(t1 -> t1.getClient() == client);
-
-                /*
-                * доделать корректное удаление из rents
-                * */
+                rents.removeIf(rent -> rent.getClient().getId() == who);
+                rentRepository.save(rents);
             }
         }
     }

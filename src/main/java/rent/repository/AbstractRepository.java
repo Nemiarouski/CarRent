@@ -18,7 +18,6 @@ public abstract class AbstractRepository<T extends IdentifiableEntity> {
         List<T> list = read();
         list.removeIf(t1 -> t1.getId() == t.getId());
         list.add(t);
-        list.sort(Comparator.comparing(l -> l.getId()));
         save(list);
     }
 
@@ -52,6 +51,7 @@ public abstract class AbstractRepository<T extends IdentifiableEntity> {
         try (FileOutputStream fileOutputStream = new FileOutputStream(filePath());
              ObjectOutputStream oos = new ObjectOutputStream(fileOutputStream))
         {
+            list.sort(Comparator.comparing(l -> l.getId()));
             oos.writeObject(list);
         } catch (IOException e) {
             e.printStackTrace();

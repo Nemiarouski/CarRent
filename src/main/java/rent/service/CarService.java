@@ -5,7 +5,6 @@ import rent.model.Car;
 import rent.repository.CarRepository;
 import java.util.Comparator;
 import java.util.List;
-import java.util.NoSuchElementException;
 
 public class CarService {
     CarRepository carRepository = new CarRepository();
@@ -15,13 +14,17 @@ public class CarService {
         String colour = Console.read("Input colour:");
 
         List<Car> cars = carRepository.read();
-        Car carMaxId = cars.stream().max(Comparator.comparing(Car::getId)).orElseThrow(NoSuchElementException::new);
-
+        Car carMaxId = cars.stream().max(Comparator.comparing(Car::getId)).orElse(null);
         Car car = new Car();
-        car.setId(carMaxId.getId() + 1);
+
+        if (carMaxId != null) {
+            car.setId(carMaxId.getId() + 1);
+        } else {
+            car.setId(0);
+        }
+
         car.setModel(model);
         car.setColour(colour);
-
         cars.add(car);
         carRepository.save(cars);
     }
