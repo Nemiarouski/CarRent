@@ -15,7 +15,7 @@ public class FileManager {
     private final static String PATH = "src/main/java/rent/task/test5.txt";
 
     public static void main(String[] args) {
-        writeClients();
+/*        writeClients();
         readClients();
     }
 
@@ -50,5 +50,5 @@ public class FileManager {
             System.out.println(e);
         }
         return clients;
-    }
+   */ }
 }

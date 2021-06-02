@@ -1,5 +1,5 @@
 package rent.repository;
 
-public interface IdentifiableEntity {
-    int getId();
+public interface IdentifiableEntity<T> {
+    T getId();
 }

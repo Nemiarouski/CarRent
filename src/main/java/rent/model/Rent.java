@@ -4,27 +4,27 @@ import rent.repository.IdentifiableEntity;
 
 import java.io.Serializable;
 
-public class Rent implements IdentifiableEntity, Serializable {
+public class Rent implements IdentifiableEntity<Integer>, Serializable {
     private static final long serialVersionUID = 1L;
-    private int id;
+    private Integer id;
     private Car car;
     private Client client;
     private boolean rent;
 
     public Rent() {
     }
-    public Rent(int id, Car car, Client client, boolean rent) {
+    public Rent(Integer id, Car car, Client client, boolean rent) {
         this.id = id;
         this.car = car;
         this.client = client;
         this.rent = rent;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

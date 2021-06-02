@@ -25,7 +25,7 @@ public class RentService {
         List<Rent> rents = rentRepository.read();
 
         clientService.show();
-        int who = Integer.parseInt(Console.read("Which client want to unset car?"));
+        String who = Console.read("Which client want to unset car?");
         Client client = clientService.findById(who);
 
         if (client == null) {
@@ -41,7 +41,7 @@ public class RentService {
                 client.setCar(null);
                 clientService.save(client);
 
-                rents.removeIf(rent -> rent.getClient().getId() == who);
+                rents.removeIf(rent -> rent.getClient().getId().equals(who));
                 rentRepository.save(rents);
             }
         }
@@ -51,7 +51,7 @@ public class RentService {
         List<Rent> rents = rentRepository.read();
 
         clientService.show();
-        int who = Integer.parseInt(Console.read("Which client want to rent car?"));
+        String who = Console.read("Which client want to rent car?");
         Client client = clientService.findById(who);
 
         if (client == null) {
@@ -76,8 +76,10 @@ public class RentService {
                         rent = new Rent(0, car, client, true);
                     }
                     rentRepository.saveOrUpdate(rent);
+
                     car.setRent(true);
                     carService.save(car);
+
                     client.setCar(car);
                     clientService.save(client);
                 }

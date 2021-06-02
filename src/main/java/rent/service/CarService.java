@@ -2,6 +2,7 @@ package rent.service;
 
 import rent.menu.Console;
 import rent.model.Car;
+import rent.model.IntegerWrapper;
 import rent.repository.CarRepository;
 import java.util.Comparator;
 import java.util.List;
@@ -15,12 +16,19 @@ public class CarService {
 
         List<Car> cars = carRepository.read();
         Car carMaxId = cars.stream().max(Comparator.comparing(Car::getId)).orElse(null);
-        Car car = new Car();
+
+        IntegerWrapper maxId = null;
 
         if (carMaxId != null) {
-            car.setId(carMaxId.getId() + 1);
+            maxId = carMaxId.getId();
+        }
+
+        Car car = new Car();
+
+        if (maxId != null) {
+            car.setId(new IntegerWrapper(maxId.getValue() + 1));
         } else {
-            car.setId(0);
+            car.setId(new IntegerWrapper(0));
         }
 
         car.setModel(model);
@@ -36,7 +44,7 @@ public class CarService {
     public void update() {
         show();
         int choice = Integer.parseInt(Console.read("Which number to update?"));
-        Car car = carRepository.findById(choice);
+        Car car = findById(choice);
 
         if (car != null) {
             car.setModel(Console.read("New model:"));
@@ -48,11 +56,12 @@ public class CarService {
     }
 
     public void delete() {
+
         show();
         String choice = Console.read("Which number to delete?");
 
         List<Car> cars = carRepository.read();
-        cars.removeIf(c -> c.getId() == Integer.parseInt(choice));
+        cars.removeIf(c -> c.getId().getValue() == Integer.parseInt(choice));
         carRepository.save(cars);
     }
 
@@ -69,6 +78,10 @@ public class CarService {
     }
 
     public Car findById(int id) {
+        return carRepository.findById(new IntegerWrapper(id));
+    }
+
+    public Car findById(IntegerWrapper id) {
         return carRepository.findById(id);
     }
 

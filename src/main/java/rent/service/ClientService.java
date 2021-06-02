@@ -5,7 +5,6 @@ import rent.model.Client;
 import rent.repository.ClientRepository;
 import java.util.Comparator;
 import java.util.List;
-import java.util.NoSuchElementException;
 
 public class ClientService {
     ClientRepository clientRepository = new ClientRepository();
@@ -13,12 +12,15 @@ public class ClientService {
     public void create() {
         String clientName = Console.read("Input client name:");
         List<Client> clients = clientRepository.read();
-        Client clientMaxId = clients.stream().max(Comparator.comparing(Client::getId)).orElseThrow(NoSuchElementException::new);
+        Client clientMaxId = clients.stream().max(Comparator.comparing(Client::getId)).orElse(null);
 
         Client client = new Client();
-        client.setId(clientMaxId.getId() + 1);
+        if (clientMaxId != null) {
+             client.setId(clientMaxId.getId() + 1);
+        } else {
+            client.setId("a");
+        }
         client.setName(clientName);
-
         clients.add(client);
         clientRepository.save(clients);
     }
@@ -29,7 +31,7 @@ public class ClientService {
 
     public void update() {
         show();
-        int choice = Integer.parseInt(Console.read("Which number to update?"));
+        String choice = Console.read("Which number to update?");
         Client client = clientRepository.findById(choice);
 
         if (client != null) {
@@ -45,7 +47,7 @@ public class ClientService {
         String choice = Console.read("Which number to delete?");
 
         List<Client> clients = clientRepository.read();
-        clients.removeIf(c -> c.getId() == Integer.parseInt(choice));
+        clients.removeIf(c -> c.getId().equals(choice));
         clientRepository.save(clients);
     }
 
@@ -62,7 +64,7 @@ public class ClientService {
         }
     }
 
-    public Client findById(int id) {
+    public Client findById(String id) {
         return clientRepository.findById(id);
     }
 

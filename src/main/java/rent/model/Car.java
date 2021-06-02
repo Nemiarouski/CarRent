@@ -1,30 +1,29 @@
 package rent.model;
 
 import rent.repository.IdentifiableEntity;
-
 import java.io.Serializable;
 
-public class Car implements IdentifiableEntity, Serializable {
+public class Car implements IdentifiableEntity<IntegerWrapper>, Serializable {
     private static final long serialVersionUID = 1L;
-    private int id;
+    private IntegerWrapper id;
     private String model;
     private String colour;
     private boolean rent;
 
     public Car() {
     }
-    public Car(int id, String model, String colour, boolean rent) {
+    public Car(IntegerWrapper id, String model, String colour, boolean rent) {
         this.id = id;
         this.model = model;
         this.colour = colour;
         this.rent = rent;
     }
 
-    public int getId() {
+    public IntegerWrapper getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(IntegerWrapper id) {
         this.id = id;
     }
 

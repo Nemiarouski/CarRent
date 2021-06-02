@@ -1,22 +1,20 @@
 package rent.repository;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 
-public abstract class AbstractRepository<T extends IdentifiableEntity> {
+public abstract class AbstractRepository<T extends IdentifiableEntity<E>, E extends Comparable<E>> {
     protected abstract String filePath();
 
-    public T findById(int id) {
+    public T findById(E id) {
         List<T> list = read();
-        T t = list.stream().filter(l -> l.getId() == id).findFirst().orElse(null);
+        T t = list.stream().filter(l -> l.getId().equals(id)).findFirst().orElse(null);
         return t;
     }
 
     public void saveOrUpdate(T t) {
         List<T> list = read();
-        list.removeIf(t1 -> t1.getId() == t.getId());
+        list.removeIf(t1 -> t1.getId().equals(t.getId()));
         list.add(t);
         save(list);
     }
