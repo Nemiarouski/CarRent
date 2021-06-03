@@ -45,11 +45,17 @@ public class TestCase {
             System.out.println("They are same.");
         }
 
+        IntegerWrapper integerWrapper50 = new IntegerWrapper(5);
+        IntegerWrapper integerWrapper51= new IntegerWrapper(6);
+
+        if (integerWrapper50.equals(integerWrapper51)) {
+            System.out.println("They are same.");
+        }
     }
 
-/*    static void contains(List<IntegerWrapper> list, IntegerWrapper integerWrapper) {
+/*    static void contains(List<IntegerWrapper> list, Object integerWrapper) {
         for (IntegerWrapper iw : list) {
-            if (iw.getValue().equals(integerWrapper.getValue())) {
+            if (iw.equals(integerWrapper)) {
                 System.out.println("Same elements.");
             } else {
                 System.out.println("No one same elements.");

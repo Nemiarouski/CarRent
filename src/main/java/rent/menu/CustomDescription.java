@@ -16,4 +16,12 @@ public class CustomDescription {
     public String getSecondDescription() {
         return secondDescription;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        CustomDescription customDescription = (CustomDescription) o;
+        return description.equals(customDescription.description) && secondDescription.equals(customDescription.secondDescription);
+    }
 }

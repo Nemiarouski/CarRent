@@ -46,7 +46,11 @@ public class IntegerWrapper implements Comparable<IntegerWrapper>, Serializable 
         if (this == o) return true; // проверка одинаковых ссылок
         if (o == null || getClass() != o.getClass() ) return false; //проверка на null и соответствие классу
         IntegerWrapper that = (IntegerWrapper) o; //приведение одного объекта к классу другого объекта
-        return Objects.equals(value, that.value) && Objects.equals(customDescription, that.customDescription);
+        if (customDescription == null) {
+            return value.equals(that.value);
+        } else {
+            return value.equals(that.value) && customDescription.equals(that.customDescription);
+        }
     }
 
     @Override

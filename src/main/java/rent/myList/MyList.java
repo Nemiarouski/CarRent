@@ -12,7 +12,13 @@ public class MyList<T> implements MyCollectionInterface<T>{
     }
 
     @Override
-    public boolean contains(Object o) {
-        return list.contains(o);
+    public void contains(Object o) {
+        for (T iw : list) {
+            if (iw.equals(o)) {
+                System.out.println("Same elements.");
+            } else {
+                System.out.println("No one same elements.");
+            }
+        }
     }
 }
