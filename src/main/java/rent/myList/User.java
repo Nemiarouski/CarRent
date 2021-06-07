@@ -35,4 +35,12 @@ public class User {
         User user = (User) o;
         return name.equals(user.name) && age.equals(user.age);
     }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "name='" + name + '\'' +
+                ", age=" + age +
+                '}';
+    }
 }

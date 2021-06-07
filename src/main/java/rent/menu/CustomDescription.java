@@ -1,5 +1,7 @@
 package rent.menu;
 
+import java.util.Objects;
+
 public class CustomDescription {
     private final String description;
     private final String secondDescription;
@@ -23,5 +25,10 @@ public class CustomDescription {
         if (o == null || getClass() != o.getClass()) return false;
         CustomDescription customDescription = (CustomDescription) o;
         return description.equals(customDescription.description) && secondDescription.equals(customDescription.secondDescription);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(description, secondDescription);
     }
 }

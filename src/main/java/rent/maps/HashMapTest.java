@@ -11,6 +11,7 @@ public class HashMapTest {
 
         IntegerWrapper integerWrapper = new IntegerWrapper(5);
         IntegerWrapper integerWrapper1 = new IntegerWrapper(6, new CustomDescription("One", "Two"));
+        IntegerWrapper integerWrapper2 = new IntegerWrapper(6, new CustomDescription("One", "Two"));
 
         map.put(integerWrapper, "IntegerWrapper without customDescription");
         map.put(integerWrapper1, "IntegerWrapper with customDescription");
@@ -23,14 +24,6 @@ public class HashMapTest {
                 System.out.println(entry.getKey().getCustomDescription().getSecondDescription());
             }
         }
-        map.get(integerWrapper);
-
-        System.out.println("----------------------");
-        IntegerWrapper integerWrapper2 = map.keySet().stream().filter(l -> l.getValue() == 6).findFirst().orElse(null);
-        if (integerWrapper2 != null) {
-            System.out.println(integerWrapper2);
-            System.out.println(integerWrapper2.getCustomDescription().getDescription());
-            System.out.println(integerWrapper2.getCustomDescription().getSecondDescription());
-        }
+        System.out.println(map.get(integerWrapper2));
     }
 }

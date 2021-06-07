@@ -46,15 +46,26 @@ public class IntegerWrapper implements Comparable<IntegerWrapper>, Serializable 
         if (this == o) return true; // проверка одинаковых ссылок
         if (o == null || getClass() != o.getClass() ) return false; //проверка на null и соответствие классу
         IntegerWrapper that = (IntegerWrapper) o; //приведение одного объекта к классу другого объекта
-        if (customDescription == null && that.customDescription == null) {
-            return value.equals(that.value);
-        } else {
-            return value.equals(that.value) && customDescription.equals(that.customDescription);
-        }
+        return value.equals(that.value) && isEqual(customDescription, that.customDescription);
     }
 
     @Override
     public int hashCode() {
         return Objects.hash(value, customDescription);
+    }
+
+    private boolean isEqual(CustomDescription a, CustomDescription b) {
+        return a == null ? b == null : a.equals(b);
+        /*
+        if (a == null) {
+            return b == null;
+        }
+        return a.equals(b);*/
+    }
+
+    public static int sum(IntegerWrapper value) {
+        int sum = 0;
+        sum = sum + value.getValue();
+        return sum;
     }
 }

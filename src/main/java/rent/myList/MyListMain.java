@@ -15,7 +15,7 @@ public class MyListMain {
         System.out.println(myList1.contains("Two"));*/
 
         MyList<User> users = new MyList<>();
-        users.add(new User("Vasia", 23));
+        users.add(new User(null, 23));
         users.add(new User("Kolia", 19));
         users.add(new User("Romeo", 6));
         User user = new User("Romeo",7);

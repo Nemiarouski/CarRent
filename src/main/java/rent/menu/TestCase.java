@@ -2,7 +2,9 @@ package rent.menu;
 
 import rent.model.IntegerWrapper;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class TestCase {
     public static void main(String[] args) {
@@ -14,7 +16,7 @@ public class TestCase {
 
         IntegerWrapper integerWrapper2again = new IntegerWrapper(1);
 
-        List<IntegerWrapper> collection = new ArrayList<>();
+        Set<IntegerWrapper> collection = new HashSet<>();
         collection.add(integerWrapper1);
         collection.add(integerWrapper2);
         collection.add(integerWrapper3);
@@ -45,12 +47,35 @@ public class TestCase {
             System.out.println("They are same.");
         }
 
+
+        CustomDescription customDescription2 = new CustomDescription("One", "Two");
+
         IntegerWrapper integerWrapper50 = new IntegerWrapper(5);
-        IntegerWrapper integerWrapper51= new IntegerWrapper(6);
+        IntegerWrapper integerWrapper51= new IntegerWrapper(5, customDescription2);
 
         if (integerWrapper50.equals(integerWrapper51)) {
             System.out.println("They are same.");
         }
+
+        int i = 10;
+        String message = (i > 20) ? "Greater than 20" : "Less or equal than 20";
+        System.out.println(message);
+
+
+
+        System.out.println("isEqual: " + isEqual(null, new CustomDescription("", "")));
+    }
+
+    private static boolean isEqual(CustomDescription a, CustomDescription b) {
+        if (a == null) {
+            return b == null;
+        }
+        return a.equals(b);
+        /*if (a == null) {
+            return b == null;
+        } else {
+            return a.equals(b);
+        }*/
     }
 
 /*    static void contains(List<IntegerWrapper> list, Object integerWrapper) {
