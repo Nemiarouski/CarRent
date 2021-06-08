@@ -28,8 +28,9 @@ public class StreamAPI {
         // 1.2.
         System.out.println("Result: ");
         users.stream().filter(s -> s.getAge() < 30).distinct().collect(Collectors.toList()).forEach(user -> System.out.println(user.getFirstName()));
-        System.out.println("");
+        //users.stream().filter(s -> s.getAge() < 30).filter((s1,s2) -> s1.getLastName() != s2).distinct().collect(Collectors.toList()).forEach(user -> System.out.println(user.getFirstName()));
 
+        //users.stream().filter(s -> s.getAge() < 30).filter((s1, s2) -> s1.getLastName().equals(s2 -> s2.));
 
         // 2.1. List of strings
         // 2.2. Sort them in descending order
@@ -91,11 +92,28 @@ public class StreamAPI {
         numbers1.add(20);
         numbers1.add(-15);
 
-        Stream<IntegerWrapper> stream = numbers1.stream().map(IntegerWrapper::new);
-        List<IntegerWrapper> integerWrappers = stream.collect(Collectors.toList());
+        List<IntegerWrapper> integerWrappers = numbers1.stream().map(IntegerWrapper::new).collect(Collectors.toList());
+        int sum = 0;
+        //sum = integerWrappers.forEach();
 
         //integerWrappers.stream().reduce((n1, n2) -> n1.getValue() + n2.getValue());
         //System.out.println(integerWrappers.forEach(IntegerWrapper::sum));
+
+        // 5.1. Given list of users
+        // 5.2. Extract age and transform to IntegerWrapper
+        // 5.3. Return Map where key - IntegerWrapper.value, value - actual IntegerWrapper
+
+        //5.1.
+        List<User> users2 = new ArrayList<>();
+        users2.add(new User("Ivan", "Budko", 50));
+        users2.add(new User("Valentina", "Budko", 60));
+        users2.add(new User("Harry", "Potter", 10));
+        users2.add(new User("Draco", "Lucius", 15));
+        users2.add(new User("Ron", "Weasley", 20));
+
+        //5.2.
+        //List<IntegerWrapper> ageTransormfList = users2.stream().map(n -> new IntegerWrapper(n.getAge()));
+
 
 
         // 6.1. Given list of lists
@@ -110,11 +128,9 @@ public class StreamAPI {
         listOfListsOfString.add(string1);
         listOfListsOfString.add(string2);
         listOfListsOfString.add(string3);
-        List<String> allStrings = string1;
 
-        //listOfListsOfString.stream().forEach(n -> System.out.println(n));
-        //listOfListsOfString.stream().distinct().
-        System.out.println(listOfListsOfString);
+        listOfListsOfString.stream().forEach(n -> new ArrayList<>(n).forEach(n1 -> System.out.print(n1 + " ")));
+
     }
 }
 

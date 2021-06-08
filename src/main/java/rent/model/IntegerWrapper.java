@@ -3,6 +3,7 @@ package rent.model;
 import rent.menu.CustomDescription;
 
 import java.io.Serializable;
+import java.util.List;
 import java.util.Objects;
 
 public class IntegerWrapper implements Comparable<IntegerWrapper>, Serializable {
@@ -63,9 +64,10 @@ public class IntegerWrapper implements Comparable<IntegerWrapper>, Serializable 
         return a.equals(b);*/
     }
 
-    public static int sum(IntegerWrapper value) {
-        int sum = 0;
-        sum = sum + value.getValue();
-        return sum;
+    public static int sum(IntegerWrapper value1, IntegerWrapper value2) {
+/*        int sum = 0;
+        sum = value.stream().reduce((v1, v2) -> new IntegerWrapper(v1.getValue() + v2.getValue())).get().getValue();
+        return sum;*/
+        return value1.getValue() + value2.getValue();
     }
 }
