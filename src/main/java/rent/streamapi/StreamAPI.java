@@ -2,7 +2,6 @@ package rent.streamapi;
 
 import rent.model.IntegerWrapper;
 import java.util.*;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class StreamAPI {
@@ -31,20 +30,11 @@ public class StreamAPI {
         users.add(new User("Adam", "Sandler", 36));
         //1.2.
         System.out.println("Result: ");
-        //users.stream().filter(s -> s.getAge() < 30).distinct().collect(Collectors.toList()).forEach(user -> System.out.println(user.getFirstName()));
-
         users.stream()
                 .filter(s -> s.getAge() < 30)
+                .map(User::getFirstName)
                 .collect(Collectors.toSet())
-                .forEach(n -> System.out.println(n.getFirstName()));
-
-        System.out.println("");
-
-        Map<String, Integer> result = users.stream()
-                .filter(s -> s.getAge() < 30)
-                .collect(Collectors.toMap(p -> p.getFirstName(), n -> n.getAge(), (item, identicalItem) -> item));
-        System.out.println(result);
-
+                .forEach(System.out::println);
         System.out.println("");
     }
 
@@ -85,8 +75,11 @@ public class StreamAPI {
         System.out.println("");
 
         System.out.println("Sort by age in descending order with Comparator:");
-        Comparator<User> comparator = Comparator.comparing(User::getAge);
-        users.sort(comparator.reversed());
+        users.sort(StreamAPI::compare);
+
+        //Same result
+        //users.sort(new UserComparator().reversed());
+
         users.forEach(System.out::println);
         System.out.println("");
     }
@@ -150,7 +143,7 @@ public class StreamAPI {
         //5.2.
         Map<Integer, IntegerWrapper> map = users.stream()
                 .map(n -> new IntegerWrapper(n.getAge()))
-                .collect(Collectors.toMap(IntegerWrapper::getValue, Function.identity()));
+                .collect(Collectors.toMap(IntegerWrapper::getValue, iw -> iw));
         System.out.println(map);
         System.out.println("");
     }
@@ -170,5 +163,9 @@ public class StreamAPI {
         listOfListsOfString.stream()
                 .flatMap(List<String>::stream)
                 .forEach(n1 -> System.out.print(n1 + " "));
+    }
+
+    public static int compare(User o1, User o2) {
+        return  o2.getAge() - o1.getAge();
     }
 }
