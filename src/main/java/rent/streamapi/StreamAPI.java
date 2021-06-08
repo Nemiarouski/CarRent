@@ -1,8 +1,8 @@
 package rent.streamapi;
 
 import rent.model.IntegerWrapper;
-
 import java.util.*;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class StreamAPI {
@@ -32,13 +32,19 @@ public class StreamAPI {
         //1.2.
         System.out.println("Result: ");
         //users.stream().filter(s -> s.getAge() < 30).distinct().collect(Collectors.toList()).forEach(user -> System.out.println(user.getFirstName()));
-        users
-                .stream()
+
+        users.stream()
                 .filter(s -> s.getAge() < 30)
                 .collect(Collectors.toSet())
-                //.collect(Collectors.toList())
-                .forEach(user -> System.out.println(user.getFirstName()));
-        //mapToSet();
+                .forEach(n -> System.out.println(n.getFirstName()));
+
+        System.out.println("");
+
+        Map<String, Integer> result = users.stream()
+                .filter(s -> s.getAge() < 30)
+                .collect(Collectors.toMap(p -> p.getFirstName(), n -> n.getAge(), (item, identicalItem) -> item));
+        System.out.println(result);
+
         System.out.println("");
     }
 
@@ -57,7 +63,11 @@ public class StreamAPI {
         lannistersSlogan.add("Debts");
         //2.2. and 2.3.
         System.out.println("Lannisters slogan in reverse order:");
-        System.out.println(lannistersSlogan.stream().sorted(Comparator.reverseOrder()).collect(Collectors.joining(";")));
+        String result = lannistersSlogan
+                .stream()
+                .sorted(Comparator.reverseOrder())
+                .collect(Collectors.joining(";"));
+        System.out.println(result);
         System.out.println("");
         //2.4.
         List<User> users = new ArrayList<>();
@@ -68,13 +78,16 @@ public class StreamAPI {
         users.add(new User("Ron", "Weasley", 20));
         //2.5.
         System.out.println("Sort by age in descending order:");
-        users.stream().sorted(Comparator.comparing(User::getAge).reversed()).forEach(System.out::println);
+        users
+                .stream()
+                .sorted(Comparator.comparing(User::getAge).reversed())
+                .forEach(System.out::println);
         System.out.println("");
 
         System.out.println("Sort by age in descending order with Comparator:");
-        Comparator<User> comparator = Comparator.comparing(obj -> obj.getAge());
-        Collections.sort(users, comparator.reversed());
-        users.stream().forEach(System.out::println);
+        Comparator<User> comparator = Comparator.comparing(User::getAge);
+        users.sort(comparator.reversed());
+        users.forEach(System.out::println);
         System.out.println("");
     }
 
@@ -91,7 +104,11 @@ public class StreamAPI {
         numbers.add(-15);
         //3.2.
         System.out.println("Sum of list numbers: ");
-        System.out.println(numbers.stream().reduce((n1, n2) -> n1 + n2).orElse(0));
+        int result = numbers
+                .stream()
+                .reduce((n1, n2) -> n1 + n2)
+                .orElse(0);
+        System.out.println(result);
         System.out.println("");
     }
 
@@ -116,6 +133,7 @@ public class StreamAPI {
                 .reduce((n1, n2) -> n1.sum(n2));
         //4.3.
         wrapper.ifPresent(n -> System.out.println("Your sum is: " + n.getValue()));
+        System.out.println("");
     }
 
     // 5.1. Given list of users
@@ -130,7 +148,11 @@ public class StreamAPI {
         users.add(new User("Draco", "Lucius", 15));
         users.add(new User("Ron", "Weasley", 20));
         //5.2.
-        //List<IntegerWrapper> ageTransormfList = users2.stream().map(n -> new IntegerWrapper(n.getAge()));
+        Map<Integer, IntegerWrapper> map = users.stream()
+                .map(n -> new IntegerWrapper(n.getAge()))
+                .collect(Collectors.toMap(IntegerWrapper::getValue, Function.identity()));
+        System.out.println(map);
+        System.out.println("");
     }
 
     // 6.1. Given list of lists
