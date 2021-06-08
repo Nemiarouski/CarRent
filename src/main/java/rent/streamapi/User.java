@@ -1,12 +1,17 @@
 package rent.streamapi;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 
 public class User {
     private String firstName;
     private String lastName;
     private int age;
-    private DataTime bitrhDay;
+    private LocalDate bitrhDay;
+    private LocalDateTime lastLogin;
+    DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
     public User() {
     }
@@ -16,11 +21,12 @@ public class User {
         this.age = age;
     }
 
-    public User(String firstName, String lastName, int age, DataTime bitrhDay) {
+    public User(String firstName, String lastName, int age, String lastLogin) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.age = age;
-        this.bitrhDay = bitrhDay;
+        this.bitrhDay = LocalDate.now().minusYears(age);
+        this.lastLogin = LocalDateTime.parse(lastLogin, format);
     }
 
     public String getFirstName() {
@@ -47,12 +53,20 @@ public class User {
         this.age = age;
     }
 
-    public DataTime getBitrhDay() {
+    public LocalDate getBitrhDay() {
         return bitrhDay;
     }
 
-    public void setBitrhDay(DataTime bitrhDay) {
-        this.bitrhDay = bitrhDay;
+    public void setBitrhDay(String birthday) {
+        this.bitrhDay = LocalDate.parse(birthday);
+    }
+
+    public LocalDateTime getLastLogin() {
+        return lastLogin;
+    }
+
+    public void setLastLogin(LocalDateTime lastLogin) {
+        this.lastLogin = lastLogin;
     }
 
     @Override
@@ -62,6 +76,7 @@ public class User {
                 ", lastName='" + lastName + '\'' +
                 ", age=" + age +
                 ", bitrhDay=" + bitrhDay +
+                ", lastLogin=" + lastLogin +
                 '}';
     }
 
@@ -70,11 +85,11 @@ public class User {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
-        return age == user.age && Objects.equals(firstName, user.firstName) && Objects.equals(lastName, user.lastName) && Objects.equals(bitrhDay, user.bitrhDay);
+        return age == user.age && Objects.equals(firstName, user.firstName) && Objects.equals(lastName, user.lastName) && Objects.equals(bitrhDay, user.bitrhDay) && Objects.equals(lastLogin, user.lastLogin);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(firstName, lastName, age, bitrhDay);
+        return Objects.hash(firstName, lastName, age, bitrhDay, lastLogin);
     }
 }
