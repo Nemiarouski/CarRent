@@ -1,7 +1,6 @@
 package rent.streamapi;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
+import java.time.*;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,7 +13,7 @@ public class DateTime {
         users.add(new User("Harry", "Pinterest", LocalDate.of(2009, 6, 9), LocalDateTime.of(2021, 6, 7, 14, 4, 23)));
         users.add(new User("Harry", "Walker", LocalDate.of(2009, 7, 12), LocalDateTime.of(2021, 5, 13, 17, 14, 23)));
         users.add(new User("Robert", "Pattinson", LocalDate.of(1986, 5, 13), LocalDateTime.of(2021, 4, 22, 19, 6, 23)));
-        users.add(new User("Bruce", "Willis", LocalDate.of(1955, 3, 19), LocalDateTime.of(2021, 3, 19, 7, 44, 23)));
+        users.add(new User("Bruce", "Willis", LocalDate.of(1955, 3, 19), LocalDateTime.of(2021, 3, 19, 4, 44, 23)));
         users.add(new User("Michel", "Jackson", LocalDate.of(1958, 8, 29), LocalDateTime.of(2021, 2, 28, 13, 24, 23)));
 
         taskThree(users);
@@ -22,6 +21,8 @@ public class DateTime {
         taskFour(users);
         System.out.println();
         taskFive(users);
+        System.out.println();
+        taskSix(users);
     }
 
     //3. Вывести список пользователей, которые не логинились последние 5 дней
@@ -56,6 +57,29 @@ public class DateTime {
 
         System.out.println("\nAnd show their birthdays: ");
         sortUsers.forEach(n -> System.out.println(n.getBirthDay().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"))));
+    }
+
+    //6. Вывести дату логина всех пользователей в CET & CST
+    public static void taskSix(List<User> users) {
+        ZoneOffset cetZone = ZoneOffset.of("+02:00");
+        ZoneOffset cstZone = ZoneOffset.of("-06:00");
+
+        List<User> sortUsers = users.stream()
+                .sorted(new UserComparator())
+                .collect(Collectors.toList());
+
+        System.out.println("Central European Time");
+        sortUsers.forEach(n -> System.out.println(n.getLastLogin().plusHours(2)
+                .format(DateTimeFormatter.ofPattern("MM.dd.yyyy HH:mm:ss"))));
+
+        System.out.println();
+        System.out.println("Central State Time:");
+        sortUsers.forEach(n -> System.out.println(n.getLastLogin().minusHours(6)
+                .format(DateTimeFormatter.ofPattern("MM.dd.yyyy HH:mm:ss"))));
+
+        System.out.println("\nTest cet timezone:");
+        OffsetDateTime cetDate = OffsetDateTime.now(cetZone);
+        System.out.println(cetDate.format(DateTimeFormatter.ofPattern("MM.dd.yyyy HH:mm:ss")));
     }
 }
 /*
