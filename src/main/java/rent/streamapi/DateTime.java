@@ -2,78 +2,60 @@ package rent.streamapi;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.temporal.ChronoUnit;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class DataTime {
+public class DateTime {
     public static void main(String[] args) {
-        taskThree();
+        List<User> users = new ArrayList<>();
+        users.add(new User("Harry", "Potter", LocalDate.of(2009, 6, 9), LocalDateTime.of(2021, 6, 9, 10, 8, 23)));
+        users.add(new User("Harry", "Pinterest", LocalDate.of(2009, 6, 9), LocalDateTime.of(2021, 6, 7, 14, 4, 23)));
+        users.add(new User("Harry", "Walker", LocalDate.of(2009, 7, 12), LocalDateTime.of(2021, 5, 13, 17, 14, 23)));
+        users.add(new User("Robert", "Pattinson", LocalDate.of(1986, 5, 13), LocalDateTime.of(2021, 4, 22, 19, 6, 23)));
+        users.add(new User("Bruce", "Willis", LocalDate.of(1955, 3, 19), LocalDateTime.of(2021, 3, 19, 7, 44, 23)));
+        users.add(new User("Michel", "Jackson", LocalDate.of(1958, 8, 29), LocalDateTime.of(2021, 2, 28, 13, 24, 23)));
+
+        taskThree(users);
         System.out.println();
-        taskFour();
+        taskFour(users);
         System.out.println();
-        taskFive();
+        taskFive(users);
     }
 
     //3. Вывести список пользователей, которые не логинились последние 5 дней
-    public static void taskThree() {
-        List<User> users = new ArrayList<>();
-        users.add(new User("Harry", "Potter", 12,"2021-06-08 14:04:23"));
-        users.add(new User("Harry", "Armstrong", 12,"2021-06-08 14:04:23"));
-        users.add(new User("Harry", "Walker", 12,"2021-06-08 14:04:23"));
-        users.add(new User("Ron", "Weasley", 13,"2021-06-07 11:24:23"));
-        users.add(new User("Michel", "Jackson", 30,"2021-05-08 17:06:23"));
-        users.add(new User("Bruce", "Willis", 50,"2021-04-12 10:14:23"));
-        users.add(new User("Michel", "Obama", 32,"2021-03-08 19:54:23"));
-
+    public static void taskThree(List<User> users) {
         System.out.println("Users, who didn't login last 5 days.");
         users.stream()
                 .filter(n -> n.getLastLogin()
                         .isBefore(LocalDateTime.now()
-                                .minus(5, ChronoUnit.DAYS)))
+                                .minusDays(5)))
                 .collect(Collectors.toList())
                 .forEach(System.out::println);
     }
 
     //4. Вывести пользователей, которые родились после 10 апреля 1995г.
-    public static void taskFour() {
-        List<User> users = new ArrayList<>();
-        users.add(new User("Harry", "Potter", 12,"2021-06-08 14:04:23"));
-        users.add(new User("Harry", "Armstrong", 12,"2021-06-08 14:04:23"));
-        users.add(new User("Harry", "Walker", 12,"2021-06-08 14:04:23"));
-        users.add(new User("Ron", "Weasley", 13,"2021-06-07 11:24:23"));
-        users.add(new User("Michel", "Jackson", 30,"2021-05-08 17:06:23"));
-        users.add(new User("Bruce", "Willis", 50,"2021-04-12 10:14:23"));
-        users.add(new User("Michel", "Obama", 32,"2021-03-08 19:54:23"));
-
+    public static void taskFour(List<User> users) {
         System.out.println("Users, who were born after 10 April 1995");
         users.stream()
-                .filter(n -> n.getBitrhDay()
-                        .isAfter(LocalDate.of(1995,04,10)))
+                .filter(n -> n.getBirthDay()
+                        .isAfter(LocalDate.of(1995,4,10)))
                 .collect(Collectors.toList())
                 .forEach(System.out::println);
     }
 
     //5. Отсортировать пользователей
-    public static void taskFive() {
-        List<User> users = new ArrayList<>();
-        System.out.println("Sort users by birthday, firstName, lastName: ");
-        users.add(new User("A", "A", 10,"2021-06-08 14:04:23"));
-        users.add(new User("A", "AB", 10,"2021-06-08 14:04:23"));
-        users.add(new User("A", "ABC", 10,"2021-06-08 14:04:23"));
-        users.add(new User("A", "ABCD", 10,"2021-06-08 14:04:23"));
-
-        users.stream()
+    public static void taskFive(List<User> users) {
+        List<User> sortUsers = users.stream()
                 .sorted(new UserComparator())
-                .collect(Collectors.toList())
-                .forEach(System.out::println);
+                .collect(Collectors.toList());
+
+        System.out.println("Sort users by birthday, firstName, lastName: ");
+        sortUsers.forEach(System.out::println);
 
         System.out.println("\nAnd show their birthdays: ");
-        users.stream()
-                .sorted(new UserComparator())
-                .collect(Collectors.toList())
-                .forEach(n -> System.out.println(n.getBitrhDay()));
+        sortUsers.forEach(n -> System.out.println(n.getBirthDay().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"))));
     }
 }
 /*
