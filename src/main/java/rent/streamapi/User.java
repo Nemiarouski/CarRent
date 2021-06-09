@@ -24,7 +24,7 @@ public class User {
         this.firstName = firstName;
         this.lastName = lastName;
         this.age = LocalDate.now().getYear() - birthDay.getYear();
-        this.birthDay = LocalDate.now().minusYears(age);
+        this.birthDay = birthDay;
         this.lastLogin = lastLogin;
     }
 
@@ -74,7 +74,7 @@ public class User {
                 "firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", age=" + age +
-                ", bitrhDay=" + birthDay.format(DateTimeFormatter.ofPattern("dd/MM/yyyy")) +
+                ", birthDay=" + birthDay.format(DateTimeFormatter.ofPattern("dd/MM/yyyy")) +
                 ", lastLogin=" + lastLogin.format(DateTimeFormatter.ofPattern("dd/MM/yyyy--HH:mm:ss")) +
                 '}';
     }
