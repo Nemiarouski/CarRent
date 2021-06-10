@@ -1,10 +1,11 @@
-package rent.streamapi;
+package rent.datetime;
 
 import java.time.*;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.TimeZone;
 import java.util.stream.Collectors;
 
 public class DateTime {
@@ -30,11 +31,11 @@ public class DateTime {
 
     //3. Вывести список пользователей, которые не логинились последние 5 дней
     public static void taskThree(List<User> users) {
-        LocalDateTime now = LocalDateTime.now();
+        LocalDateTime now = LocalDateTime.now().minusDays(5);
         System.out.println("Users, who didn't login last 5 days:");
         users.stream()
                 .filter(n -> n.getLastLogin()
-                        .isBefore(now.minusDays(5)))
+                        .isBefore(now))
                 .collect(Collectors.toList())
                 .forEach(System.out::println);
     }
@@ -73,8 +74,8 @@ public class DateTime {
                 .format(DateTimeFormatter.ofPattern("MM.dd.yyyy HH:mm:ss"))));
 
         System.out.println();
-        System.out.println("UTC:");
-        sortUsers.forEach(n -> System.out.println(cetToUtc(n.getLastLogin())
+        System.out.println("CST:");
+        sortUsers.forEach(n -> System.out.println(utcToCst(n.getLastLogin())
                 .format(DateTimeFormatter.ofPattern("MM.dd.yyyy HH:mm:ss"))));
     }
 
@@ -88,14 +89,14 @@ public class DateTime {
         sortUsers.forEach(System.out::println);
     }
 
-    public static LocalDateTime cetToUtc(LocalDateTime timeInCet) {
-        ZonedDateTime cetTimeZoned = ZonedDateTime.of(timeInCet, ZoneId.of("CET"));
-        return cetTimeZoned.withZoneSameInstant(ZoneId.of("UTC")).toLocalDateTime();
-    }
-
     public static LocalDateTime utcToCet(LocalDateTime timeInUtc) {
         ZonedDateTime utcTimeZoned = ZonedDateTime.of(timeInUtc,ZoneId.of("UTC"));
         return utcTimeZoned.withZoneSameInstant(ZoneId.of("CET")).toLocalDateTime();
+    }
+
+    public static LocalDateTime utcToCst(LocalDateTime timeInUtc) {
+        ZonedDateTime utcTimeZoned = ZonedDateTime.of(timeInUtc,ZoneId.of("UTC"));
+        return utcTimeZoned.withZoneSameInstant(TimeZone.getTimeZone("CST").toZoneId()).toLocalDateTime();
     }
 }
 /*
