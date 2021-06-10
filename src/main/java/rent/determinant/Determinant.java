@@ -5,9 +5,11 @@ import java.util.regex.Pattern;
 
 public class Determinant {
     private static final String EMAIL_PATTERN = "^[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
-    //private static final String UUID_PATTERN = "^[0-9A-Za-z]{16}$";
-    private static final String UUID_PATTERN = "[0-9A-Za-z]{4}-[0-9A-Za-z]{4}-[0-9A-Za-z]{4}-[0-9A-Za-z]{4}";
+    private static final String UUID_PATTERN = "\\w{4}-\\w{4}-\\w{4}-\\w{4}";
     private static final String NUMBERS_PATTERN = "^[-+]?[0-9]*[.,]?[0-9]+(?:[eE][-+]?[0-9]+)?$";
+    // work with +xxxxxxxxxxxx & +xxx(xx)xxxxxxx & +xxx(xx)xxx-xx-xx
+    private static final String PHONE_PATTERN = "[+]+\\d{12}|[+]+\\d{3}+[(\\d{2})]+\\d{7}|[+]+\\d{3}+[(\\d{2})]+\\d{3}+[-]+\\d{2}+[-]+\\d{2}";
+
 
     public static void main(String[] args) {
         System.out.println("Welcome to our program! Input your line:");
@@ -16,7 +18,8 @@ public class Determinant {
         String email = "nemiaroiskipetr@gmail.com";
         String uuid = "1234-5678-90AB-CDEF";
         String phoneNumber = "+375(29)2899959";
-        String phoneNumber1 = "+375(29)289-99-59";
+        String phoneNumber1 = "+375292899959";
+        String phoneNumber2 = "+375(29)289-99-59";
         //url (http(s)://some_url_value.some_suffix)
         String url = "http://stackoverflow.com";
         //число (как целочисленное, так и дробное) (набор цифр) (как доп. задание - учитывать тысячный разделитель)
@@ -51,6 +54,10 @@ public class Determinant {
         System.out.println("Determ phone number: " + phoneNumber1);
         determinePhoneNumber(phoneNumber1);
 
+        System.out.println();
+        System.out.println("Determ phone number: " + phoneNumber2);
+        determinePhoneNumber(phoneNumber2);
+
     }
 
     public static void determineEmail(String lineToDeterm) {
@@ -68,11 +75,7 @@ public class Determinant {
     }
 
     public static void determinePhoneNumber(String lineToDeterm) {
-/*        Pattern pattern = patternCreator("\\+\\d{10}|(?:\\d{3}-){2}\\d{4}|\\(\\d{3}\\)\\d{3}-?\\d{4}");
-        //формат +xxx(xx)xxx-xx-xx
-        Pattern pattern1 = patternCreator("^[+]?\\d{3}\\(\\d{2})?\\d{3}?\\d{2}?\\d{2}$");
-        Matcher matcher = matcherCreator(pattern1, lineToDeterm);
-        System.out.println(matcher.matches());*/
+        System.out.println(createPatternMatcher(PHONE_PATTERN, lineToDeterm));
     }
 
     public static boolean createPatternMatcher(String regExLine, String lineToDeterm) {
@@ -84,7 +87,7 @@ public class Determinant {
 /* Консольное приложение, которое валидирует и определяет тип введенных данных, поддерживаемые форматы:
     1) email                                                                                                        -> DONE
     2) UUID (в нашей ситуации будем считать, что это 16 букв/цифр), каждые 4 разделены знаком "-"                   -> DONE
-    3) phone number (формат +xxx(xx)xxx-xx-xx), где x- цифра, минусы опциональны
+    3) phone number (формат +xxx(xx)xxx-xx-xx), где x- цифра, минусы опциональны                                    -> DONE
     4) url (http(s)://some_url_value.some_suffix)
     5) число (как целочисленное, так и дробное) (набор цифр) (как доп. задание - учитывать тысячный разделитель)    -> DONE
     6) иначе вывод сообщения "неизвестный формат"
