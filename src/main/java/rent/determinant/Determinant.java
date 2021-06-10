@@ -5,13 +5,8 @@ import java.util.regex.Pattern;
 
 public class Determinant {
     private static final String EMAIL_PATTERN = "^[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
-
     //private static final String UUID_PATTERN = "^[0-9A-Za-z]{16}$";
-    private static final String UUID_PATTERN = "[0-9A-Za-z]-[0-9A-Za-z]-[0-9A-Za-z]-[0-9A-Za-z]" +
-            "-[0-9A-Za-z]-[0-9A-Za-z]-[0-9A-Za-z]-[0-9A-Za-z]" +
-            "-[0-9A-Za-z]-[0-9A-Za-z]-[0-9A-Za-z]-[0-9A-Za-z]" +
-            "-[0-9A-Za-z]-[0-9A-Za-z]-[0-9A-Za-z]-[0-9A-Za-z]";
-
+    private static final String UUID_PATTERN = "[0-9A-Za-z]{4}-[0-9A-Za-z]{4}-[0-9A-Za-z]{4}-[0-9A-Za-z]{4}";
     private static final String NUMBERS_PATTERN = "^[-+]?[0-9]*[.,]?[0-9]+(?:[eE][-+]?[0-9]+)?$";
 
     public static void main(String[] args) {
@@ -19,7 +14,7 @@ public class Determinant {
         //String line = Reader.read();
 
         String email = "nemiaroiskipetr@gmail.com";
-        String uuid = "1-2-3-4-5-6-7-8-9-0-A-B-C-D-E-F";
+        String uuid = "1234-5678-90AB-CDEF";
         String phoneNumber = "+375(29)2899959";
         String phoneNumber1 = "+375(29)289-99-59";
         //url (http(s)://some_url_value.some_suffix)
@@ -63,7 +58,7 @@ public class Determinant {
     }
 
     public static void determineUuid(String lineToDeterm) {
-        if (lineToDeterm.length() == 31) {
+        if (lineToDeterm.length() == 19) {
             System.out.println(createPatternMatcher(UUID_PATTERN, lineToDeterm));
         }
     }
