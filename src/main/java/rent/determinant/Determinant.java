@@ -31,54 +31,48 @@ public class Determinant {
         double dnum1 = 3.5;
 
         // Email validation
-        System.out.println("Determ email: " + email);
-        System.out.println(determEmail(email));
+        System.out.println("\nDeterm email: " + email);
+        determineEmail(email);
 
         // UUID validation
         System.out.println();
         System.out.println("Determ UUID: " + uuid);
-        determUuid(uuid);
+        determineUuid(uuid);
 
         // Numbers
         System.out.println();
         System.out.println("Determ numbers");
-        determNumbers(String.valueOf(num));
-        determNumbers(String.valueOf(num1));
-        determNumbers(String.valueOf(dnum));
-        determNumbers(String.valueOf(dnum1));
+        determineNumbers(String.valueOf(num));
+        determineNumbers(String.valueOf(num1));
+        determineNumbers(String.valueOf(dnum));
+        determineNumbers(String.valueOf(dnum1));
 
         // Phone number
         System.out.println();
         System.out.println("Determ phone number: " + phoneNumber);
-        determPhoneNumber(phoneNumber);
+        determinePhoneNumber(phoneNumber);
 
         System.out.println();
         System.out.println("Determ phone number: " + phoneNumber1);
-        determPhoneNumber(phoneNumber1);
+        determinePhoneNumber(phoneNumber1);
 
     }
 
-    public static boolean determEmail(String lineToDeterm) {
-        Pattern pattern = patternCreator(EMAIL_PATTERN);
-        Matcher matcher = matcherCreator(pattern, lineToDeterm);
-        return matcher.matches();
+    public static void determineEmail(String lineToDeterm) {
+        System.out.println(createPatternMatcher(EMAIL_PATTERN, lineToDeterm));
     }
 
-    public static void determUuid(String lineToDeterm) {
+    public static void determineUuid(String lineToDeterm) {
         if (lineToDeterm.length() == 31) {
-            Pattern pattern = patternCreator(UUID_PATTERN);
-            Matcher matcher = matcherCreator(pattern, lineToDeterm);
-            System.out.println(matcher.matches());
+            System.out.println(createPatternMatcher(UUID_PATTERN, lineToDeterm));
         }
     }
 
-    public static void determNumbers(String linetoDeterm) {
-        Pattern pattern = patternCreator(NUMBERS_PATTERN);
-        Matcher matcher = matcherCreator(pattern, linetoDeterm);
-        System.out.println(matcher.matches());
+    public static void determineNumbers(String linetoDeterm) {
+        System.out.println(createPatternMatcher(NUMBERS_PATTERN, linetoDeterm));
     }
 
-    public static void determPhoneNumber(String lineToDeterm) {
+    public static void determinePhoneNumber(String lineToDeterm) {
 /*        Pattern pattern = patternCreator("\\+\\d{10}|(?:\\d{3}-){2}\\d{4}|\\(\\d{3}\\)\\d{3}-?\\d{4}");
         //формат +xxx(xx)xxx-xx-xx
         Pattern pattern1 = patternCreator("^[+]?\\d{3}\\(\\d{2})?\\d{3}?\\d{2}?\\d{2}$");
@@ -86,17 +80,15 @@ public class Determinant {
         System.out.println(matcher.matches());*/
     }
 
-    public static Pattern patternCreator(String regExLine) {
-        return Pattern.compile(regExLine);
-    }
-
-    public static Matcher matcherCreator(Pattern pattern, String lineToMatch) {
-        return pattern.matcher(lineToMatch);
+    public static boolean createPatternMatcher(String regExLine, String lineToDeterm) {
+        Pattern pattern = Pattern.compile(regExLine);
+        Matcher matcher = pattern.matcher(lineToDeterm);
+        return matcher.matches();
     }
 }
 /* Консольное приложение, которое валидирует и определяет тип введенных данных, поддерживаемые форматы:
     1) email                                                                                                        -> DONE
-    2) UUID (в нашей ситуации будем считать, что это 16 букв/цифр), каждые из которых разделены знаком "-"          -> DONE
+    2) UUID (в нашей ситуации будем считать, что это 16 букв/цифр), каждые 4 разделены знаком "-"                   -> DONE
     3) phone number (формат +xxx(xx)xxx-xx-xx), где x- цифра, минусы опциональны
     4) url (http(s)://some_url_value.some_suffix)
     5) число (как целочисленное, так и дробное) (набор цифр) (как доп. задание - учитывать тысячный разделитель)    -> DONE
