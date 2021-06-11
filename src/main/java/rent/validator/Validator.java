@@ -4,14 +4,14 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public abstract class Validator {
-    protected boolean createPatternMatcher(String regExLine, String checkLine) {
+    protected Matcher creatingMatcher(String regExLine, String checkLine) {
         Pattern pattern = Pattern.compile(regExLine);
         Matcher matcher = pattern.matcher(checkLine);
-        return matcher.matches();
+        return matcher;
     }
 
     protected boolean isValid(String checkLine) {
-        return createPatternMatcher(getPattern(), checkLine);
+        return creatingMatcher(getPattern(), checkLine).matches();
     }
 
     protected abstract String getPattern();
