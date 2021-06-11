@@ -1,24 +1,20 @@
 package rent.validator;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class Menu {
-    Validator emailValidator = new EmailValidator();
-    Validator phoneValidator = new PhoneValidator();
-    Validator numberValidator = new NumberValidator();
-    Validator uuidValidator = new UuidValidator();
     List<Validator> validators = new ArrayList<>();
 
     private void validatorsToList() {
-        validators = Arrays.asList(phoneValidator, emailValidator, numberValidator, uuidValidator);
+        validators = List.of(new PhoneValidator(), new EmailValidator(), new NumberValidator(), new UuidValidator());
     }
 
     public void validate(String checkLine) {
         validatorsToList();
-        if (isValid(checkLine) != null) {
-            System.out.println(isValid(checkLine));
+        Validator condition = isValid(checkLine);
+        if (condition != null) {
+            System.out.println(condition);
         } else {
             System.out.println("Unknown format");
         }
