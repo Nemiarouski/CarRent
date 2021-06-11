@@ -10,5 +10,9 @@ public abstract class Validator {
         return matcher.matches();
     }
 
-    protected abstract boolean isValid(String checkLine);
+    protected boolean isValid(String checkLine) {
+        return createPatternMatcher(getPattern(), checkLine);
+    }
+
+    protected abstract String getPattern();
 }
