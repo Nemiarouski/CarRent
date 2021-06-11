@@ -11,13 +11,25 @@ public class Menu {
     Validator uuidValidator = new UuidValidator();
     List<Validator> validators = new ArrayList<>();
 
-    public void validate(String checkLine) {
+    private void validatorsToList() {
         validators = Arrays.asList(phoneValidator, emailValidator, numberValidator, uuidValidator);
+    }
 
+    public void validate(String checkLine) {
+        validatorsToList();
+        if (isValid(checkLine) != null) {
+            System.out.println(isValid(checkLine));
+        } else {
+            System.out.println("Unknown format");
+        }
+    }
+
+    private Validator isValid(String checkLine) {
         for (Validator validator: validators) {
             if (validator.isValid(checkLine)) {
-                System.out.println(validator);
+                return validator;
             }
         }
+        return null;
     }
 }
