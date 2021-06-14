@@ -27,7 +27,9 @@ public class FloatingPointTest {
 
         System.out.println(new BigDecimal ("5.50").setScale(2).equals(new BigDecimal("5.5").setScale(2)));
 
+    }
 
-
+    public static boolean equals(BigDecimal bigDecimal, BigDecimal bigDecimal1) {
+        return bigDecimal.compareTo(bigDecimal1) == 0;
     }
 }
