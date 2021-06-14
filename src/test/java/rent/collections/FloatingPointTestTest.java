@@ -8,8 +8,8 @@ class FloatingPointTestTest {
 
     @Test
     void compareBigDecimal () {
-        BigDecimal bigDecimal = new BigDecimal("2.005");
-        BigDecimal bigDecimal1 = new BigDecimal("2.0050");
+        BigDecimal bigDecimal = new BigDecimal("2.05");
+        BigDecimal bigDecimal1 = new BigDecimal("2.050");
         assertTrue(FloatingPointTest.equals(bigDecimal, bigDecimal1));
     }
 }
