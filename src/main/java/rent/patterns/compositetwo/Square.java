@@ -1,4 +1,4 @@
-package rent.patterns.secondcomposite;
+package rent.patterns.compositetwo;
 
 public class Square implements Shape {
     @Override

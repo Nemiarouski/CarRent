@@ -1,4 +1,4 @@
-package rent.patterns.secondcomposite;
+package rent.patterns.compositetwo;
 
 import java.util.ArrayList;
 import java.util.List;

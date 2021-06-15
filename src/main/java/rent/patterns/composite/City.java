@@ -3,7 +3,7 @@ package rent.patterns.composite;
 import java.util.ArrayList;
 import java.util.List;
 
-public class City {
+public class City implements Worker {
     private List<Worker> workers = new ArrayList<>();
 
     public void addWorker(Worker worker) {
@@ -14,9 +14,9 @@ public class City {
         workers.remove(worker);
     }
 
-    public void createWork() {
-        System.out.println("In our city work: ");
-        for (Worker worker: workers) {
+    @Override
+    public void work() {
+        for (Worker worker : workers) {
             worker.work();
         }
     }

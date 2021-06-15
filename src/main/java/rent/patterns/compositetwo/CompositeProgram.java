@@ -1,4 +1,4 @@
-package rent.patterns.secondcomposite;
+package rent.patterns.compositetwo;
 
 public class CompositeProgram {
     public static void main(String[] args) {
