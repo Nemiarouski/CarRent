@@ -2,22 +2,22 @@ package rent.collections.map;
 
 import java.util.Objects;
 
-public class Key implements Comparable<Key>{
+public class Key {
     private Integer id;
     private String serialWord;
 
     public Key() {
     }
-    public Key(int id, String serialWord) {
+    public Key(Integer id, String serialWord) {
         this.id = id;
         this.serialWord = serialWord;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -43,7 +43,10 @@ public class Key implements Comparable<Key>{
     }
 
     @Override
-    public int compareTo(Key o) {
-        return this.id.compareTo(o.id);
+    public String toString() {
+        return "Key{" +
+                "id=" + id +
+                ", serialWord='" + serialWord + '\'' +
+                '}';
     }
 }
