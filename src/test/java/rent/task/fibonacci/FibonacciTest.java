@@ -7,26 +7,17 @@ import static org.junit.jupiter.api.Assertions.*;
 class FibonacciTest {
 
     @Test
-    void getNumberByChoice() {
-        Fibonacci fibonacci = new Fibonacci();
-        fibonacci.fibNumbersInit();
-        fibonacci.fibonacci(0);
-        int real = fibonacci.getNumberByChoice(0);
-
-        assertEquals(0, real);
-    }
-
-    @Test
-    void fabNumbersInit() {
-        Fibonacci fibonacci = new Fibonacci();
-        fibonacci.getFibonacciNumbers().size();
-    }
-
-    @Test
     void fibRecursion() {
         Fibonacci fibonacci = new Fibonacci();
-        int n = fibonacci.fibonacciRecursion(3);
-        assertEquals(2, n);
+        int n = fibonacci.fibonacciRecursion(5);
+        assertEquals(5, n);
+    }
+
+    @Test
+    void negFibRecursion() {
+        Fibonacci fibonacci = new Fibonacci();
+        int real = fibonacci.negativeFibonacciRecursion(-6);
+        assertEquals(-8, real);
     }
 
     @Test

@@ -3,23 +3,21 @@ package rent.task.fibonacci;
 import rent.menu.Console;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class Fibonacci {
     private Integer firstElement = 0;
     private Integer secondElement = 1;
     private List<Integer> fibonacciNumbers = new ArrayList<>();
 
-    public List<Integer> getFibonacciNumbers() {
-        return fibonacciNumbers;
-    }
-
-    public void fibonacci(int choice) {
+    public int fibonacci(int choice) {
         for (int i = 0; i < choice; i++) {
             Integer thirdElement = firstElement + secondElement;
             fibonacciNumbers.add(thirdElement);
             firstElement = secondElement;
             secondElement = thirdElement;
         }
+        return fibonacciNumbers.get(choice);
     }
 
     public int fibonacciRecursion(int n) {
@@ -27,6 +25,13 @@ public class Fibonacci {
             return n;
         }
         return fibonacciRecursion(n - 1) + fibonacciRecursion(n - 2);
+    }
+
+    public int negativeFibonacciRecursion(int n) {
+        if (n > -2) {
+            return -n;
+        }
+        return negativeFibonacciRecursion(n + 2) - negativeFibonacciRecursion(n + 1);
     }
 
     public int factorial(int n) {
@@ -44,10 +49,6 @@ public class Fibonacci {
         return n * factorialRecursion(n - 1);
     }
 
-    public Integer getNumberByChoice(int choice) {
-        return fibonacciNumbers.get(choice - 1);
-    }
-
     public void fibNumbersInit() {
         fibonacciNumbers.add(firstElement);
         fibonacciNumbers.add(secondElement);
@@ -56,16 +57,17 @@ public class Fibonacci {
     public static void main(String[] args) {
         Fibonacci fibonacci = new Fibonacci();
         fibonacci.fibNumbersInit();
-/*
-        System.out.println("Input the number of Fibonacci numbers: ");
-        int choice = Integer.parseInt(Console.read());
-        fibonacci.fibonacci(choice);
-        System.out.println(fibonacci.getNumberByChoice(choice));
 
-        System.out.println("\nFactorial by recursion:");
-        System.out.println(fibonacci.factorialRecursion(1));*/
+        System.out.println("Factorial by recursion:");
+        System.out.println(fibonacci.factorialRecursion(1));
 
-        System.out.println("\nFibonacci by recursion:");
-        System.out.println(fibonacci.fibonacciRecursion(3));
+        System.out.println("Fibonacci by for:");
+        System.out.println(fibonacci.fibonacci(5));
+
+        System.out.println("Fibonacci by recursion:");
+        System.out.println(fibonacci.fibonacciRecursion(5));
+
+        System.out.println("Negative Fibonacci");
+        System.out.println(fibonacci.negativeFibonacciRecursion(-8));
     }
 }
