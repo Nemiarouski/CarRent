@@ -3,7 +3,6 @@ package rent.task.fibonacci;
 import rent.menu.Console;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Stream;
 
 public class Fibonacci {
     private static Integer firstElement = 0;
