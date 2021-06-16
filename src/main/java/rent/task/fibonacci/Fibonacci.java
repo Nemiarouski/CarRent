@@ -7,25 +7,31 @@ import java.util.List;
 public class Fibonacci {
     private static Integer firstElement = 0;
     private static Integer secondElement = 1;
-    private static Integer thirdElement;
     private static List<Integer> fibonacciNumbers = new ArrayList<>();
 
     public static void fillFibonacciNumbers(int choice) {
-        fibonacciNumbers.add(firstElement);
-        fibonacciNumbers.add(secondElement);
-
         for (int i = 0; i < choice; i++) {
-            thirdElement = firstElement + secondElement;
+            Integer thirdElement = firstElement + secondElement;
             fibonacciNumbers.add(thirdElement);
             firstElement = secondElement;
             secondElement = thirdElement;
         }
-        System.out.println(fibonacciNumbers.get(choice - 1));
+    }
+
+    public static Integer getNumberByChoice(int choice) {
+        return fibonacciNumbers.get(choice);
+    }
+
+    public static void fibNumbersInit() {
+        fibonacciNumbers.add(firstElement);
+        fibonacciNumbers.add(secondElement);
     }
 
     public static void main(String[] args) {
+        fibNumbersInit();
         System.out.println("Input the number of Fibonacci numbers: ");
         int choice = Integer.parseInt(Console.read());
         fillFibonacciNumbers(choice);
+        System.out.println(getNumberByChoice(choice));
     }
 }
