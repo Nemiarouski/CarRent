@@ -10,16 +10,23 @@ class FibonacciTest {
     void getNumberByChoice() {
         Fibonacci fibonacci = new Fibonacci();
         fibonacci.fibNumbersInit();
-        fibonacci.fillFibonacciNumbers(0);
+        fibonacci.fibonacci(0);
         int real = fibonacci.getNumberByChoice(0);
 
         assertEquals(0, real);
     }
 
     @Test
-    void fibNumbersInit() {
+    void fabNumbersInit() {
         Fibonacci fibonacci = new Fibonacci();
         fibonacci.getFibonacciNumbers().size();
+    }
+
+    @Test
+    void fibRecursion() {
+        Fibonacci fibonacci = new Fibonacci();
+        int n = fibonacci.fibonacciRecursion(3);
+        assertEquals(2, n);
     }
 
     @Test

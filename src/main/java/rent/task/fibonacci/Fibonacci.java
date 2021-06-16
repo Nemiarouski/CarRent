@@ -13,13 +13,20 @@ public class Fibonacci {
         return fibonacciNumbers;
     }
 
-    public void fillFibonacciNumbers(int choice) {
+    public void fibonacci(int choice) {
         for (int i = 0; i < choice; i++) {
             Integer thirdElement = firstElement + secondElement;
             fibonacciNumbers.add(thirdElement);
             firstElement = secondElement;
             secondElement = thirdElement;
         }
+    }
+
+    public int fibonacciRecursion(int n) {
+        if (n < 2) {
+            return n;
+        }
+        return fibonacciRecursion(n - 1) + fibonacciRecursion(n - 2);
     }
 
     public int factorial(int n) {
@@ -31,12 +38,10 @@ public class Fibonacci {
     }
 
     public int factorialRecursion(int n) {
-        int result = 1;
-
         if (n == 1) {
-            return result;
+            return 1;
         }
-        return result * n * factorialRecursion(n - 1);
+        return n * factorialRecursion(n - 1);
     }
 
     public Integer getNumberByChoice(int choice) {
@@ -51,13 +56,16 @@ public class Fibonacci {
     public static void main(String[] args) {
         Fibonacci fibonacci = new Fibonacci();
         fibonacci.fibNumbersInit();
-
+/*
         System.out.println("Input the number of Fibonacci numbers: ");
         int choice = Integer.parseInt(Console.read());
-        fibonacci.fillFibonacciNumbers(choice);
+        fibonacci.fibonacci(choice);
         System.out.println(fibonacci.getNumberByChoice(choice));
 
-        System.out.println("Factorial by recursion:");
-        System.out.println(fibonacci.factorialRecursion(5));
+        System.out.println("\nFactorial by recursion:");
+        System.out.println(fibonacci.factorialRecursion(1));*/
+
+        System.out.println("\nFibonacci by recursion:");
+        System.out.println(fibonacci.fibonacciRecursion(3));
     }
 }
