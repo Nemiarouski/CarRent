@@ -5,11 +5,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Fibonacci {
-    private static Integer firstElement = 0;
-    private static Integer secondElement = 1;
-    private static List<Integer> fibonacciNumbers = new ArrayList<>();
+    private Integer firstElement = 0;
+    private Integer secondElement = 1;
+    private List<Integer> fibonacciNumbers = new ArrayList<>();
 
-    public static void fillFibonacciNumbers(int choice) {
+    public List<Integer> getFibonacciNumbers() {
+        return fibonacciNumbers;
+    }
+
+    public void fillFibonacciNumbers(int choice) {
         for (int i = 0; i < choice; i++) {
             Integer thirdElement = firstElement + secondElement;
             fibonacciNumbers.add(thirdElement);
@@ -18,20 +22,42 @@ public class Fibonacci {
         }
     }
 
-    public static Integer getNumberByChoice(int choice) {
-        return fibonacciNumbers.get(choice);
+    public int factorial(int n) {
+        int result = 1;
+        for (int i = 1; i <= n; i++) {
+            result = result * i;
+        }
+        return result;
     }
 
-    public static void fibNumbersInit() {
+    public int factorialRecursion(int n) {
+        int result = 1;
+
+        if (n == 1) {
+            return result;
+        }
+        return result * n * factorialRecursion(n - 1);
+    }
+
+    public Integer getNumberByChoice(int choice) {
+        return fibonacciNumbers.get(choice - 1);
+    }
+
+    public void fibNumbersInit() {
         fibonacciNumbers.add(firstElement);
         fibonacciNumbers.add(secondElement);
     }
 
     public static void main(String[] args) {
-        fibNumbersInit();
+        Fibonacci fibonacci = new Fibonacci();
+        fibonacci.fibNumbersInit();
+
         System.out.println("Input the number of Fibonacci numbers: ");
         int choice = Integer.parseInt(Console.read());
-        fillFibonacciNumbers(choice);
-        System.out.println(getNumberByChoice(choice));
+        fibonacci.fillFibonacciNumbers(choice);
+        System.out.println(fibonacci.getNumberByChoice(choice));
+
+        System.out.println("Factorial by recursion:");
+        System.out.println(fibonacci.factorialRecursion(5));
     }
 }

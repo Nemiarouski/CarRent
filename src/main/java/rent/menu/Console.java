@@ -9,4 +9,8 @@ public class Console {
         String data = scanner.nextLine();
         return data;
     }
+
+    public static String read() {
+        return new Scanner(System.in).nextLine();
+    }
 }
