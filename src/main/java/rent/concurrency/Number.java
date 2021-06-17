@@ -1,15 +1,15 @@
 package rent.concurrency;
 
 public class Number {
-    private Integer num = 0;
+    private int num = 0;
 
-    public synchronized void printNumber() {
+    public void printNumber() {
         synchronized (this) {
             num++;
         }
     }
 
-    public Integer getNum() {
+    public int getNum() {
         return num;
     }
 }
