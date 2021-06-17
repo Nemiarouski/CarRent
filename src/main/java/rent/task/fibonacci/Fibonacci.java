@@ -1,9 +1,7 @@
 package rent.task.fibonacci;
 
-import rent.menu.Console;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 public class Fibonacci {
     private Integer firstElement = 0;
@@ -32,6 +30,19 @@ public class Fibonacci {
             return -n;
         }
         return negativeFibonacciRecursion(n + 2) - negativeFibonacciRecursion(n + 1);
+    }
+
+    public int generalFib(int n) {
+        if (n == -1) {
+            return 1;
+        }
+        if (n >= 2) {
+            return fibonacciRecursion(n - 1) + fibonacciRecursion(n - 2);
+        } else if (n <= -2) {
+            return negativeFibonacciRecursion(n + 2) - negativeFibonacciRecursion(n + 1);
+        } else {
+           return n;
+        }
     }
 
     public int factorial(int n) {
@@ -68,6 +79,6 @@ public class Fibonacci {
         System.out.println(fibonacci.fibonacciRecursion(5));
 
         System.out.println("Negative Fibonacci");
-        System.out.println(fibonacci.negativeFibonacciRecursion(-8));
+        System.out.println(fibonacci.negativeFibonacciRecursion(-3));
     }
 }
