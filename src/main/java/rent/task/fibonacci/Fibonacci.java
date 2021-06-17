@@ -11,7 +11,6 @@ public class Fibonacci {
     public int fibonacci(int choice) {
         for (int i = 0; i < choice; i++) {
             Integer thirdElement = firstElement + secondElement;
-            fibonacciNumbers.add(thirdElement);
             firstElement = secondElement;
             secondElement = thirdElement;
         }
@@ -33,16 +32,7 @@ public class Fibonacci {
     }
 
     public int generalFib(int n) {
-        if (n == -1) {
-            return 1;
-        }
-        if (n >= 2) {
-            return fibonacciRecursion(n - 1) + fibonacciRecursion(n - 2);
-        } else if (n <= -2) {
-            return negativeFibonacciRecursion(n + 2) - negativeFibonacciRecursion(n + 1);
-        } else {
-           return n;
-        }
+        return n > 0 ? fibonacciRecursion(n) : negativeFibonacciRecursion(n);
     }
 
     public int factorial(int n) {

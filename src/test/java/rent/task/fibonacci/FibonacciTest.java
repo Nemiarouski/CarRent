@@ -12,10 +12,11 @@ class FibonacciTest {
     void genFib(){
         Fibonacci fibonacci = new Fibonacci();
         List<Integer> expected = List.of(-55, 34, -21, 13, -8, 5, -3, 2, -1, 1, 0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55);
-        List<Integer> range = List.of(-10, -9, -8, -7, -6, -5, -4, -3, -2, -1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
-        for (int i = 0; i <range.size(); i++) {
-            assertEquals(expected.get(i), fibonacci.generalFib(range.get(i)));
+        List<Integer> actual = new ArrayList<>();
+        for (int i = -10; i <= 10; i++) {
+            actual.add(fibonacci.generalFib(i));
         }
+        assertEquals(expected, actual);
     }
 
     @Test
