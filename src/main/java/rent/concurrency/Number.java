@@ -3,9 +3,9 @@ package rent.concurrency;
 public class Number {
     private Integer num = 0;
 
-    public void printNumber() {
-        for (int i = 0; i < 2; i++) {
-           num++;
+    public synchronized void printNumber() {
+        synchronized (this) {
+            num++;
         }
     }
 
