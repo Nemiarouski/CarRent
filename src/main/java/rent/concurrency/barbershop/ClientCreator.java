@@ -1,11 +1,13 @@
 package rent.concurrency.barbershop;
 
+import java.util.List;
+
 public class ClientCreator extends Thread {
-    private Hairdresser hairdresser;
+    private List<Hairdresser> hairdressers;
     private int clientCount;
 
-    public ClientCreator(Hairdresser hairdresser, int clientCount) {
-        this.hairdresser = hairdresser;
+    public ClientCreator(List<Hairdresser> hairdressers, int clientCount) {
+        this.hairdressers = hairdressers;
         this.clientCount = clientCount;
     }
 
@@ -14,8 +16,9 @@ public class ClientCreator extends Thread {
         for (int i = 0; i < clientCount; i++) {
             try {
                 System.out.println("[New client]: " + Thread.currentThread().getName());
-                hairdresser.work();
-                Thread.sleep(1000);
+                int randomHairdresser = (int) (Math.random() * hairdressers.size());
+                hairdressers.get(randomHairdresser).work();
+                Thread.sleep(500);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }

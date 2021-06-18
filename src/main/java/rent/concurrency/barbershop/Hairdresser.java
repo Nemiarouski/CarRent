@@ -1,16 +1,18 @@
 package rent.concurrency.barbershop;
 
 public class Hairdresser {
+    private String name;
     private int min;
     private int max;
 
-    public Hairdresser(int min, int max) {
+    public Hairdresser(String name, int min, int max) {
+        this.name = name;
         this.min = min * 1000;
         this.max = max * 1000;
     }
 
     public synchronized void work() {
-        System.out.println("[Hairdresser work with]: " + Thread.currentThread().getName());
+        System.out.println("[Hairdresser " + name + " work with]: " + Thread.currentThread().getName());
         int serviceTime = createServiceTime();
         try {
             Thread.sleep(serviceTime);
