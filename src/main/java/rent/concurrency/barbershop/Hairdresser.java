@@ -12,7 +12,6 @@ public class Hairdresser {
             e.printStackTrace();
         }
         System.out.println("Client: " + Thread.currentThread().getName() + " served by: " + serviceTime / 1000 + " sec.");
-        notify();
     }
 
     public int createServiceTime() {
