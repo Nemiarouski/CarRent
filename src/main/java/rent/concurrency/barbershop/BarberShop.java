@@ -6,5 +6,6 @@ public class BarberShop {
         for (int i = 0; i < 10; i++) {
             new Client(hairdresser).start();
         }
+        new ClientCreator(hairdresser, 5).start();
     }
 }

@@ -10,6 +10,7 @@ public class Client extends Thread{
     @Override
     public void run() {
         System.out.println("Create new client. Client name: " + Thread.currentThread().getName());
+        hairdresser.addClient();
         hairdresser.work();
     }
 }
