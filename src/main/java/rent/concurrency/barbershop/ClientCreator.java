@@ -13,15 +13,12 @@ public class ClientCreator extends Thread {
     public void run() {
         for (int i = 0; i < clientCount; i++) {
             try {
-                createClient();
-                Thread.sleep(2000);
+                System.out.println("[New client]: " + Thread.currentThread().getName());
+                hairdresser.work();
+                Thread.sleep(1000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
         }
-    }
-
-    public void createClient() {
-        new Client(hairdresser).start();
     }
 }
