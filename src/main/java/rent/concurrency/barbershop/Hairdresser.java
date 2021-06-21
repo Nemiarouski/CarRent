@@ -1,29 +1,37 @@
 package rent.concurrency.barbershop;
 
-public class Hairdresser {
+import java.text.DecimalFormat;
+
+public class Hairdresser extends Thread {
     private String name;
     private int min;
     private int max;
+    private final Barbershop barbershop;
 
-    public Hairdresser(String name, int min, int max) {
+    public Hairdresser(String name, int min, int max, Barbershop barbershop) {
         this.name = name;
         this.min = min * 1000;
         this.max = max * 1000;
+        this.barbershop = barbershop;
+        setName(name);
     }
 
-    public synchronized void work() {
-        System.out.println("[Hairdresser " + name + " work with]: " + Thread.currentThread().getName());
-        int serviceTime = createServiceTime();
-        try {
-            Thread.sleep(serviceTime);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+    @Override
+    public void run() {
+        while (true) {
+            Client clientToServe = barbershop.getClient();
+            System.out.println("[Hairdresser " + this.getName() + " work with]: " + clientToServe.getName());
+            try {
+                Thread.sleep((long) calculateServiceTime());
+                System.out.println("[Hairdresser]: " + this.getName() + " [Serve to]: " + clientToServe.getName() + " [For]: "
+                        + new DecimalFormat("0.00").format(calculateServiceTime() / 1000)  + " sec.");
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
-        System.out.println("[Client]: " + Thread.currentThread().getName() + " [Served by]: " + serviceTime / 1000 + " sec.");
-        System.out.println();
     }
 
-    public int createServiceTime() {
-        return (int) (Math.random() * (max-min) + min);
+    public double calculateServiceTime() {
+        return (Math.random() * (max-min) + min);
     }
 }
