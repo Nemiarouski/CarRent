@@ -1,26 +1,29 @@
 package rent.concurrency.barbershop;
 
-import java.util.ArrayDeque;
-import java.util.Queue;
+import java.util.concurrent.ConcurrentLinkedQueue;
 
 public class Barbershop {
-    private volatile Queue<Client> clients = new ArrayDeque<>();
+    private final ConcurrentLinkedQueue<Client> clients = new ConcurrentLinkedQueue<>();
 
-    public synchronized void addClient(Client client) {
-        clients.add(client);
-        notify();
+    public void addClient(Client client) {
+        synchronized (clients) {
+            clients.add(client);
+            clients.notify();
+        }
     }
 
-    public synchronized Client getClient() {
-        while (clients.isEmpty()) {
-            try {
-                wait();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
+    public Client getClient() {
+        synchronized (clients) {
+            while (clients.isEmpty()) {
+                try {
+                    clients.wait();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
+            Client client = clients.poll();
+            clients.notify();
+            return client;
         }
-        Client client = clients.poll();
-        notify();
-        return client;
     }
 }

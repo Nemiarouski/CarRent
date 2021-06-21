@@ -1,7 +1,5 @@
 package rent.concurrency.barbershop;
 
-import java.text.DecimalFormat;
-
 public class Hairdresser extends Thread {
     private String name;
     private int min;
@@ -22,18 +20,17 @@ public class Hairdresser extends Thread {
             Client clientToServe = barbershop.getClient();
             System.out.println("[Hairdresser " + this.getName() + " work with]: " + clientToServe.getName());
             try {
-                double time = calculateServiceTime();
-                long newTime = (long) time;
-                Thread.sleep(newTime);
+                long time = calculateServiceTime();
+                Thread.sleep(time);
                 System.out.println("[Hairdresser]: " + this.getName() + " [Serve to]: " + clientToServe.getName() + " [For]: "
-                        + new DecimalFormat("0.00").format(time / 1000)  + " sec.");
+                        + (double) time / 1000  + " sec.");
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
         }
     }
 
-    public double calculateServiceTime() {
-        return (Math.random() * (max-min) + min);
+    public long calculateServiceTime() {
+        return (long) (Math.random() * (max-min) + min);
     }
 }
