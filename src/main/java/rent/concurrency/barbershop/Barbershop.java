@@ -1,10 +1,10 @@
 package rent.concurrency.barbershop;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.ArrayDeque;
+import java.util.Queue;
 
 public class Barbershop {
-    private volatile List<Client> clients = new ArrayList<>();
+    private volatile Queue<Client> clients = new ArrayDeque<>();
 
     public synchronized void addClient(Client client) {
         clients.add(client);
@@ -19,8 +19,7 @@ public class Barbershop {
                 e.printStackTrace();
             }
         }
-        Client client = clients.get(0);
-        clients.remove(0);
+        Client client = clients.poll();
         notify();
         return client;
     }
