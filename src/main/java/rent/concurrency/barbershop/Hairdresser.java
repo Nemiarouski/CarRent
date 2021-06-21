@@ -1,6 +1,6 @@
 package rent.concurrency.barbershop;
 
-public class Hairdresser extends Thread {
+public class Hairdresser implements Runnable {
     private String name;
     private int min;
     private int max;
@@ -11,18 +11,18 @@ public class Hairdresser extends Thread {
         this.min = min * 1000;
         this.max = max * 1000;
         this.barbershop = barbershop;
-        setName(name);
     }
 
     @Override
     public void run() {
+        Thread.currentThread().setName(name);
         while (true) {
             Client clientToServe = barbershop.getClient();
-            System.out.println("[Hairdresser " + this.getName() + " work with]: " + clientToServe.getName());
+            System.out.println("[Hairdresser " + Thread.currentThread().getName() + " work with]: " + clientToServe.getName());
             try {
                 long time = calculateServiceTime();
                 Thread.sleep(time);
-                System.out.println("[Hairdresser]: " + this.getName() + " [Serve to]: " + clientToServe.getName() + " [For]: "
+                System.out.println("[Hairdresser]: " + Thread.currentThread().getName() + " [Serve to]: " + clientToServe.getName() + " [For]: "
                         + (double) time / 1000  + " sec.");
             } catch (InterruptedException e) {
                 e.printStackTrace();
