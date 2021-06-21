@@ -22,9 +22,10 @@ public class Hairdresser extends Thread {
             Client clientToServe = barbershop.getClient();
             System.out.println("[Hairdresser " + this.getName() + " work with]: " + clientToServe.getName());
             try {
-                Thread.sleep((long) calculateServiceTime());
+                double time = calculateServiceTime();
+                Thread.sleep((long) time);
                 System.out.println("[Hairdresser]: " + this.getName() + " [Serve to]: " + clientToServe.getName() + " [For]: "
-                        + new DecimalFormat("0.00").format(calculateServiceTime() / 1000)  + " sec.");
+                        + new DecimalFormat("0.00").format(time / 1000)  + " sec.");
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
