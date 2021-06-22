@@ -2,7 +2,7 @@ package rent.concurrency.barbershop;
 
 import java.util.concurrent.Callable;
 
-public class Hairdresser implements Callable<Client> {
+public class Hairdresser implements Callable {
     private String name;
     private int min;
     private int max;
