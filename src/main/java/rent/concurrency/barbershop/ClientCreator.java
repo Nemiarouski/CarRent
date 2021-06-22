@@ -1,6 +1,8 @@
 package rent.concurrency.barbershop;
 
-public class ClientCreator extends Thread {
+import java.util.concurrent.Callable;
+
+public class ClientCreator implements Callable<Client> {
     private final Barbershop barbershop;
     private final int clientCount;
 
@@ -10,7 +12,7 @@ public class ClientCreator extends Thread {
     }
 
     @Override
-    public void run() {
+    public Client call() {
         int currentCount = clientCount;
         while (currentCount > 0) {
             try {
@@ -18,12 +20,13 @@ public class ClientCreator extends Thread {
                 System.out.println("[New client]: " + client.getName());
                 barbershop.addClient(client);
 
-                sleep(1500);
+                Thread.sleep(1500);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
 
             currentCount--;
         }
+        return null;
     }
 }

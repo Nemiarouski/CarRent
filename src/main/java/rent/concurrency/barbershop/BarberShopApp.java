@@ -1,14 +1,19 @@
 package rent.concurrency.barbershop;
 
+import java.util.concurrent.*;
+
 public class BarberShopApp {
     public static void main(String[] args) {
         Barbershop barbershop = new Barbershop();
 
-        new ClientCreator(barbershop, 6).start();
+        ExecutorService service = Executors.newCachedThreadPool();
+        service.submit(new ClientCreator(barbershop,6));
 
-        new Thread(new Hairdresser("James", 1,7, barbershop)).start();
-        new Thread(new Hairdresser("Katie", 3,8, barbershop)).start();
-        new Thread(new Hairdresser("Amanda", 5,7, barbershop)).start();
-        new Thread(new Hairdresser("Robert", 1,12, barbershop)).start();
+        service.submit(new Hairdresser("James", 1,7, barbershop));
+        service.submit(new Hairdresser("Katie", 3,8, barbershop));
+        service.submit(new Hairdresser("Amanda", 5,7, barbershop));
+        service.submit(new Hairdresser("Robert", 1,5, barbershop));
+
+        service.shutdown();
     }
 }

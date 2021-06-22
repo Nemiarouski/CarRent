@@ -1,6 +1,8 @@
 package rent.concurrency.barbershop;
 
-public class Hairdresser implements Runnable {
+import java.util.concurrent.Callable;
+
+public class Hairdresser implements Callable<Client> {
     private String name;
     private int min;
     private int max;
@@ -14,7 +16,7 @@ public class Hairdresser implements Runnable {
     }
 
     @Override
-    public void run() {
+    public Client call() {
         Thread.currentThread().setName(name);
         while (true) {
             Client clientToServe = barbershop.getClient();
